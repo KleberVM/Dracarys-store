@@ -1,5 +1,5 @@
 <div class="profile-config">
-    <h2>Configuración del Perfil</h2>
+    
      
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
@@ -10,10 +10,11 @@
             <img id="preview" src="{% if user.foto %}{{ user.foto.url }}{% else %}https://via.placeholder.com/150{% endif %}" alt="Foto de perfil">
             <input type="file" name="imagenPerfil" id="imagenPerfil" style="display: none;">
             <div id="botones-contenedor">
-                <button type="button" id="editar-imagen">Editar foto</button>
+                <button class = editaFoto type="button" id="editar-imagen">Editar foto</button>
                 <button type="submit" class="save-imagen">Guardar foto</button>
             </div>
         </div>
+
 
         <label for="name">Nombre:</label>
         <input type="text" id="name" name="nombre" value="{{ user.nombre }}" readonly>
