@@ -1,4 +1,4 @@
-// Funcionalidad de los botones de categorías
+// se añadieron las funcionalidades de los botones con JS
 document.querySelectorAll('.category-btn').forEach(button => {
     button.addEventListener('click', function () {
         // Obtener la lista de subcategorías relacionada con el botón clicado
