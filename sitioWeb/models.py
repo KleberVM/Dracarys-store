@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 # Create your models here.
-
+# db creado por Ruben-Kleber
 # Modelo Usuario
 class Usuario(models.Model):
     idUsuario = models.AutoField(primary_key=True,null= False ,blank=False)  # Identificador único del usuario
