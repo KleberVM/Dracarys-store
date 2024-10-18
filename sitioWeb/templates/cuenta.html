@@ -1,10 +1,6 @@
 <div class="profile-config">
-    
-     
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-
-        
 
         <div class="profile-photo">
             <img id="preview" src="{% if user.foto %}{{ user.foto.url }}{% else %}https://via.placeholder.com/150{% endif %}" alt="Foto de perfil">
@@ -90,7 +86,6 @@
 <a href="{% url 'logout' %}" class="logout">Cerrar sesión</a>
 <a href="{% url 'ofertar' %}" class="ofertarM"> Ofertar Material</a>
 
-
 <div class="menu-perfil">
     <img id="previewed" src="{% if user.foto %}{{ user.foto.url }}{% else %}https://via.placeholder.com/150{% endif %}" alt="Foto de Perfil">
     <ul class="lista-perfil">
@@ -99,3 +94,4 @@
         <li><a href="{% url 'logout' %}" class="logoutS">Cerrar sesión</a></li>
     </ul>
 </div>
+----------------
