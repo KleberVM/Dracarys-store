@@ -33,7 +33,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGOUT_REDIRECT_URL = '/'  # Cambia '/' por la URL de tu página de inicio si es necesario
 
 # Application definition
-
+#importante registrar la pp
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

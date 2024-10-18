@@ -13,7 +13,7 @@ from .views import(
     cargar_provincias_por_departamento,
 ) # Asegúrate de importar tu vista
 from django.contrib.auth import views as auth_views
-
+# agregamos las direcciones
 urlpatterns = [
     path('',baseView , name= 'base'),
     path('login/', login_view, name='login'),  # Define la URL para el login

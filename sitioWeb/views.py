@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 import json
-
+# configuracion hecha por kleber
 # Create your views here.
 def baseView(request):
     '''Esto es la pagina principal'''
