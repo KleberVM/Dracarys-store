@@ -1,5 +1,4 @@
 
-
 // Habilitar los campos para editar el producto
 document.getElementById('editar-producto').addEventListener('click', function() {
     // Verificar si el botón está siendo clickeado correctamente
@@ -27,79 +26,64 @@ document.getElementById('editar-producto').addEventListener('click', function() 
     document.getElementById('boton-guardar-producto').style.display = 'inline-block'; 
     document.getElementById('boton-cancelar-producto').style.display = 'inline-block'; 
     console.log('Botón Guardar mostrado.');
-
+    console.log('Botón Cancelar mostrado.');
     // Ocultar el botón de editar
     this.style.display = 'none';
 
     // ocultar el botón de eliminar
     document.getElementById("eliminar-producto").hidden = true; // Corrección aquí
 });
+
 // Escuchar el clic en el botón de cancelar
 document.getElementById('boton-cancelar-producto').addEventListener('click', function(event) {
     event.preventDefault(); // Evita que el formulario se restablezca de inmediato
 
-    // Mostrar alerta de confirmación
-    Swal.fire({
-        title: "¿Estás seguro?",
-        text: "Todos los cambios realizados se perderán al descartar",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#666666",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Descartar",
-        cancelButtonText: "Cancelar"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Si el usuario confirma, restablecer el formulario y recargar la página
-            location.reload();
-        }
-    });
+    // Retrasar la recarga de la página 200 ms
+    setTimeout(() => {
+        // Recargar la página
+        location.reload();
+    }, 200);
 });
-
 //Restrición para las imagenes 
 function manejarRestriccionesDeImagenes() {
     const inputImagenes = document.getElementById('nuevas-imagenes');
     const previewContainer = document.querySelector('#imagenes-producto ul');
-    const maxFiles = 8; // Máximo de imágenes permitidas
-    const maxFileSize = 2 * 1024 * 1024; // 2 MB en bytes
+    const mensajeImagenesLabel = document.getElementById('mensaje-imagenes-seleccionadas');
+    const maxFiles = 8; 
+    const maxFileSize = 2 * 1024 * 1024; 
     const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
     const validFiles = [];
     const removedFiles = [];
 
-    // Contar las imágenes ya existentes que vienen de la base de datos
     const existingImagesCount = document.querySelectorAll('#imagenes-producto ul li img').length;
     let remainingSlots = maxFiles - existingImagesCount;
 
     if (!inputImagenes) return;
 
-    // Evento al seleccionar archivos en el input
     inputImagenes.addEventListener('change', () => {
         const files = Array.from(inputImagenes.files);
-
-        // Limpiar el contenedor de vista previa de nuevas imágenes
         previewContainer.innerHTML = "";
+        mensajeImagenesLabel.style.display = "none"; 
 
-        // Verificar si se supera el número máximo de archivos permitidos, considerando las imágenes existentes
         if (files.length > remainingSlots) {
             Swal.fire({
                 icon: 'warning',
                 title: 'Límite de archivos',
                 text: `Puedes agregar solo ${remainingSlots} imagen(es) más para no exceder el límite de ${maxFiles}.`
             });
-
-            // Limitar el array de archivos a los primeros espacios disponibles
             files.splice(remainingSlots);
         }
 
+        const nombresDeArchivos = []; 
+
         files.forEach(file => {
-            // Validar tipo y tamaño de archivo
             const isValidType = validTypes.includes(file.type);
             const isValidSize = file.size <= maxFileSize;
 
             if (isValidType && isValidSize) {
                 validFiles.push(file);
+                nombresDeArchivos.push(file.name); 
 
-                // Crear vista previa para cada archivo válido
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     const li = document.createElement('li');
@@ -115,7 +99,12 @@ function manejarRestriccionesDeImagenes() {
             }
         });
 
-        // Mostrar alerta si algunos archivos fueron eliminados
+        if (nombresDeArchivos.length > 0) {
+            mensajeImagenesLabel.style.display = "block";
+            mensajeImagenesLabel.innerHTML = "Se subirán las siguientes imágenes: " /*+ nombresDeArchivos.map(nombre => `<em>${nombre}</em>`).join(', ')*/;
+                                                                                   //Tambien se podria mostrar el nombre de las imagenes, descomentar lo de arriba
+        }
+        
         if (removedFiles.length > 0) {
             Swal.fire({
                 icon: 'error',
@@ -125,7 +114,6 @@ function manejarRestriccionesDeImagenes() {
             });
         }
 
-        // Asignar los archivos válidos nuevamente al input
         const dataTransfer = new DataTransfer();
         validFiles.forEach(file => dataTransfer.items.add(file));
         inputImagenes.files = dataTransfer.files;
@@ -172,7 +160,7 @@ document.getElementById('departamento-producto').addEventListener('change', func
         });
 });
 
-
+//Funcionalidad del eliminar imagenes seleccionadas
 document.getElementById('borrar-imagenes1').addEventListener('click', function(event) {
     event.preventDefault(); // Evita el envío predeterminado del formulario
 
@@ -194,12 +182,12 @@ document.getElementById('borrar-imagenes1').addEventListener('click', function(e
     // Confirmación de eliminación
     Swal.fire({
         title: "¿Estás seguro?",
-        text: "¡Las imágenes seleccionadas se eliminarán!",
+        text: "¡Las imágenes seleccionadas se eliminarán permanentemente!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#666666",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Sí, eliminar",
+        confirmButtonText: "Aceptar",
         cancelButtonText: "Cancelar"
     }).then((result) => {
         if (result.isConfirmed) {
@@ -220,8 +208,7 @@ document.getElementById('borrar-imagenes1').addEventListener('click', function(e
             .then(data => {
                 if (data.status === 'success') {
                     Swal.fire({
-                        title: "¡Imágenes eliminadas!",
-                        text: data.message,
+                        title: "¡Recuerda Guardar tus cambios!",
                         icon: "success",
                         confirmButtonColor: "#03A678"
                     }).then(() => {
