@@ -44,10 +44,18 @@
 
           <!-- se quito el texto del label y se le puso en el placeholder -->
           <div class="input-box">
-            <input class="input" type="text" name="username" placeholder="Nombre de Usuario (*)" required>
+            <input 
+                class="input" 
+                type="text" 
+                name="username" 
+                placeholder="Nombre de Usuario (*)" 
+                required 
+                pattern="[A-Za-z]{3,}"                
+                oninput="validateUsername(this)"
+            >
             <label></label>
             <ion-icon name="person-outline"></ion-icon>
-          </div>
+         </div>
 
           <div class="input-box">
             <input class="input" type="email" name="email" placeholder="Correo Electrónico (*)" required>
@@ -75,7 +83,8 @@
           
 
           <div class="input-box">
-            <input class="input" type="password" name="password" placeholder="Contraseña (*)" required>
+            <input class="input" type="password" name="password" placeholder="Contraseña (*)" required minlength="4" title="La contraseña debe tener almenos 4 caracteres">
+
             <label></label>
             <ion-icon name="key-outline"></ion-icon>
           </div>
