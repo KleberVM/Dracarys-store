@@ -242,6 +242,10 @@
   .CancelarRegistro a{
     text-decoration: none;
     color: var(--white);
+    display: block; /* Ocupa todo el espacio del botón */
+    width: 100%;
+    height: 100%;
+    padding: 10px 0; /* Ajusta el padding si es necesario */
   }
   .CancelarRegistro:hover{
     background-color: red; 
