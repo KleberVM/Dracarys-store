@@ -187,6 +187,34 @@
     border-radius: 8px;
 }
 
+.MensajeNoEncontrado {
+    padding-top: 20%;
+    font-size: 18px;
+    text-align: center;
+    color: red;
+    display: none;
+}
+/*Estilos de los mensajes que se mostraran cuando no haya productos para  mostrar*/
+.boton-publicar {
+    display: inline-block; /* Permite aplicar padding y border */
+    padding: 5px 10px;
+    background-color: var(--primary-color); 
+    box-shadow:2px 2px 5px 1px  var(--secondary-color);
+    color: white; 
+    border: none; 
+    border-radius: 5px;
+    text-decoration: none; 
+    cursor: pointer; 
+    transition: background-color 0.3s; /* Transición suave al cambiar color */
+}
+
+.boton-publicar:hover {
+    background-color: var(--secondary-color); /* Color al pasar el mouse */
+}
+.boton-publicar:active {
+    background-color: var(--tertiary-color); /* Color al pasar el mouse */
+}
+
 /* Tarjeta de producto individual */
 .tarjeta-productoo {
     position: relative;
