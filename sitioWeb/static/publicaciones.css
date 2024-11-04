@@ -77,7 +77,7 @@
 }
 
 .product-card h3 {
-    color: #02735e;
+    color: var(--primary-color);
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
 }
@@ -93,7 +93,7 @@
 }
 
 .product-card:hover h2 {
-    color: #02735e;
+    color: var(--primary-color);
 }
 
 .agregar-button {
@@ -120,7 +120,7 @@
 }
 
 .product-card .precio {
-    color: crimson;
+    color: var(--red);
     font-size: 18px;
     max-height: 4.5em; /* Ajusta este valor para permitir 3 líneas de texto */
     overflow: hidden;

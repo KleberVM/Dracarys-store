@@ -5,6 +5,8 @@
     --text-color: #333;
     --background-color: #f4f4f4;
     --white: #ffffff;
+    --red: #dc3545;
+    --red_hover: #cc0000;
 }
 
 * {

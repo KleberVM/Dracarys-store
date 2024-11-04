@@ -58,7 +58,7 @@
     width: 110px;
     border: none;
     border-radius: 25px;
-    background-color: red;
+    background-color: var(--red);
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -94,7 +94,7 @@
 }
 
 .checkbox-burbuja input:checked + span {
-    background-color: red;
+    background-color: var(--red);
 }
 
 .checkbox-burbuja span:after {
@@ -105,7 +105,7 @@
     left: 50%;
     width: 12px;
     height: 12px;
-    background: white;
+    background: var(--white);
     border-radius: 50%;
     transform: translate(-50%, -50%) scale(0);
     transition: transform 0.3s ease;
@@ -191,7 +191,7 @@
     padding-top: 20%;
     font-size: 18px;
     text-align: center;
-    color: red;
+    color: var(--red);
     display: none;
 }
 /*Estilos de los mensajes que se mostraran cuando no haya productos para  mostrar*/
@@ -260,7 +260,7 @@
 }
 
 .checkbox-burbuja input:checked + span {
-    background-color: red; /* Color al estar seleccionado */
+    background-color: var(--red); /* Color al estar seleccionado */
 }
 
 .checkbox-burbuja span:after {
@@ -271,7 +271,7 @@
     left: 50%;
     width: 12px;
     height: 5px;
-    background: white;
+    background: var(--white);
     border-radius: 50%;
     transform: translate(-50%, -50%) scale(0); /* Ocultar círculo interno */
     transition: transform 0.3s ease; /* Animación suave */
@@ -345,7 +345,7 @@
     border: none;
     border-radius: 5px;
     border-bottom: 1px;
-    color: white;
+    color: var(--white);
     font-weight: bold;
     text-align: center;
     cursor: pointer;
@@ -358,12 +358,12 @@
 
 /* Estilo para el estado activo (verde) */
 .boton-estado.activo {
-    background-color: #28a745; /* Verde */
+    background-color: var(--primary-color); /* Verde */
 }
 
 /* Estilo para el estado inactivo (rojo) */
 .boton-estado.inactivo {
-    background-color: #dc3545; /* Rojo */
+    background-color: var(--red); /* Rojo */
 }
 
 
@@ -405,7 +405,7 @@
     margin-bottom: 0px;
     width: 100%;
     background-color: var(--tertiary-color); /* Color verde */
-    color: white; /* Color de texto blanco */
+    color: var(--white); /* Color de texto blanco */
     text-align: center;
     border-radius: 5px; /* Bordes redondeados */
     text-decoration: none; /* Quitar el subrayado del enlace */
@@ -569,7 +569,7 @@ input[type="file"] {
     display: inline-block;
     padding: 10px 20px;
     background-color: var(--primary-color);
-    color: white;
+    color: var(--white);
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
@@ -646,7 +646,7 @@ input[type="file"] {
 }
 
 .btn-primary {
-    background-color: #02735E; /* Color cuando está deshabilitado */
+    background-color: var(--primary-color); /* Color cuando está deshabilitado */
 }
 
 .btn-primary:disabled {
@@ -656,7 +656,7 @@ input[type="file"] {
 }
 
 .btn-secondary {
-    background-color: #c02323;
+    background-color: var(--red);
 }
 
 .btn:hover {
