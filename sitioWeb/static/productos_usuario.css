@@ -58,17 +58,22 @@
     width: 110px;
     border: none;
     border-radius: 25px;
-    background-color: var(--red);
+    background-color: var(--eliminarColor);
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
-    box-shadow: 1px 1px 3px 2px var(--primary-color);
 }
 
 #eliminarSeleccionados:hover {
-    box-shadow: 1px 1px 2px 1px var(--tertiary-color);
+    background-color: var(--eliminarHover);
+    box-shadow: 0 6px 12px rgba(73, 80, 87, 0.4);
     padding: 4px 6px;
 }
+#eliminarSeleccionados:active {
+    background-color: var(--eliminarActive);
+    box-shadow: 0 2px 4px rgba(52, 58, 64, 0.2);
+    transform: scale(0.95);
+  }
 
 .eliminar-container {
     display: flex;

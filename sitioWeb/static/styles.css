@@ -5,8 +5,14 @@
     --text-color: #333;
     --background-color: #f4f4f4;
     --white: #ffffff;
-    --red: #dc3545;
-    --red_hover: #cc0000;
+    
+    --cancelarColor:#6c757d;
+    --cancelarHover:#495057;
+    --cancelarActive:#5a6268;
+
+    --eliminarColor:#dc3545;
+    --eliminarHover:#b51e2a;
+    --eliminarActive:#c82333;
 }
 
 * {
