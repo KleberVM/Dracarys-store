@@ -251,3 +251,86 @@ document.getElementById('eliminar-producto').addEventListener('click', function(
         window.location.href = url; // Redirige a la URL de eliminación
     }
 });
+
+
+
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+// Selecciona el contenedor de imágenes
+const contenedorImagenes = document.getElementById('imagenes-producto');
+
+// Función para mostrar la notificación flotante
+const mostrarNotificacion = (mensaje) => {
+    // Crea el elemento de la notificación
+    const notificacion = document.createElement('div');
+    notificacion.classList.add('notificacion-flotante');
+    notificacion.textContent = mensaje;
+
+    // Añade la notificación al body
+    document.body.appendChild(notificacion);
+
+    // Muestra la notificación
+    setTimeout(() => {
+        notificacion.style.opacity = 1;
+    }, 100);
+
+    // Oculta y elimina la notificación después de 3 segundos
+    setTimeout(() => {
+        notificacion.style.opacity = 0;
+        setTimeout(() => {
+            notificacion.remove();
+        }, 300);
+    }, 3000);
+};
+
+
+// Función para contar imágenes y controlar el mínimo de 1 imagen
+const actualizarConteo = () => {
+    const imagenes = contenedorImagenes.querySelectorAll('img');
+    const checkboxes = contenedorImagenes.querySelectorAll('input[name="imagenes_a_eliminar"]');
+
+    // Actualiza el conteo de imágenes y muestra la notificación
+   // const mensaje = `Cantidad de imágenes: ${imagenes.length}`;
+   // mostrarNotificacion(mensaje);
+
+    // Desactiva los checkboxes si solo queda una imagen
+    if (imagenes.length <= 1) {
+        checkboxes.forEach(checkbox => {
+            checkbox.disabled = true;
+        });
+    } else {
+        checkboxes.forEach(checkbox => {
+            checkbox.disabled = false;
+        });
+    }
+
+    // Llama a la función que verifica la selección de los checkboxes
+    verificarSeleccionCheckboxes();
+};
+
+// Función para verificar que no se seleccionen todos los checkboxes a la vez
+const verificarSeleccionCheckboxes = () => {
+    const checkboxes = contenedorImagenes.querySelectorAll('input[name="imagenes_a_eliminar"]');
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            const seleccionados = Array.from(checkboxes).filter(chk => chk.checked);
+
+            // Si todos están seleccionados, desmarcar el último que se intentó seleccionar
+            if (seleccionados.length === checkboxes.length) {
+                checkbox.checked = false;
+                mostrarNotificacion("Debe dejar al menos una imagen sin seleccionar.");
+            }
+        });
+    });
+};
+
+// Configuración del MutationObserver
+const observer = new MutationObserver(actualizarConteo);
+const config = { childList: true, subtree: true };
+observer.observe(contenedorImagenes, config);
+
+// Llama a la función inicialmente para verificar la cantidad de imágenes
+actualizarConteo();
