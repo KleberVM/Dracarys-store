@@ -140,6 +140,7 @@
   }
   .input{
     border: none;
+    margin-bottom: 13px;
   }
   .input:hover{
     border: 1px solid  var(--primary-color);
