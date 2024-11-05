@@ -15,7 +15,7 @@ Detalle del producto
             <div class="form-groupp">
                 <label for="nombre-producto">Nombre del Producto <span class="text-rojo">*</span></label>
                 <input class="form-controll" type="text" id="nombre-producto" name="nombre" value="{{ producto.nombre }}" required disabled 
-                       minlength="3" maxlength="100" placeholder="Ingresa el nombre del producto" 
+                       minlength="3" maxlength="50" placeholder="Ingresa el nombre del producto" 
                        onkeypress="return /^[a-zA-Z\s]*$/.test(event.key)">
                 <div class="invalid-feedback">
                     El nombre del producto debe tener entre 3 y 100 caracteres.
