@@ -44,45 +44,41 @@ document.getElementById('boton-cancelar-producto').addEventListener('click', fun
         location.reload();
     }, 200);
 });
-//Restrición para las imagenes 
+
+//--------------------------------------------------------------------------------------
+
 function manejarRestriccionesDeImagenes() {
     const inputImagenes = document.getElementById('nuevas-imagenes');
     const previewContainer = document.querySelector('#imagenes-producto ul');
     const mensajeImagenesLabel = document.getElementById('mensaje-imagenes-seleccionadas');
-    const maxFiles = 8; 
-    const maxFileSize = 2 * 1024 * 1024; 
+    const maxFiles = 8;
+    const maxFileSize = 2 * 1024 * 1024;
     const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-    const validFiles = [];
-    const removedFiles = [];
 
-    const existingImagesCount = document.querySelectorAll('#imagenes-producto ul li img').length;
-    let remainingSlots = maxFiles - existingImagesCount;
+    // Crear un DataTransfer para almacenar todas las imágenes válidas
+    const dataTransfer = new DataTransfer();
 
     if (!inputImagenes) return;
 
     inputImagenes.addEventListener('change', () => {
+        // Contar imágenes ya presentes en el contenedor de previsualización
+        const existingImages = previewContainer.querySelectorAll('li img').length;
+        let remainingSlots = maxFiles - existingImages;
+
+        // Obtener archivos del input y filtrar para validar tipo y tamaño
         const files = Array.from(inputImagenes.files);
-        previewContainer.innerHTML = "";
-        mensajeImagenesLabel.style.display = "none"; 
+        const removedFiles = [];
+        const nombresDeArchivos = [];
 
-        if (files.length > remainingSlots) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Límite de archivos',
-                text: `Puedes agregar solo ${remainingSlots} imagen(es) más para no exceder el límite de ${maxFiles}.`
-            });
-            files.splice(remainingSlots);
-        }
-
-        const nombresDeArchivos = []; 
-
+        // Filtrar y mostrar las nuevas imágenes
         files.forEach(file => {
             const isValidType = validTypes.includes(file.type);
             const isValidSize = file.size <= maxFileSize;
 
-            if (isValidType && isValidSize) {
-                validFiles.push(file);
-                nombresDeArchivos.push(file.name); 
+            // Si el archivo es válido y hay espacio, agregarlo
+            if (isValidType && isValidSize && remainingSlots > 0) {
+                dataTransfer.items.add(file); // Agregar al DataTransfer acumulado
+                nombresDeArchivos.push(file.name);
 
                 const reader = new FileReader();
                 reader.onload = function (e) {
@@ -94,17 +90,30 @@ function manejarRestriccionesDeImagenes() {
                     previewContainer.appendChild(li);
                 };
                 reader.readAsDataURL(file);
+
+                remainingSlots--; // Reducir el número de espacios restantes
+            } else if (remainingSlots <= 0) {
+                // Mostrar una advertencia cuando se alcanza el límite
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Límite de archivos',
+                    text: `Ya has alcanzado el límite de ${maxFiles} imágenes.`
+                });
             } else {
+                // Si el archivo es inválido por tipo o tamaño, agregar a la lista de eliminados
                 removedFiles.push(file.name);
             }
         });
 
+        // Mostrar mensaje de selección de imágenes
         if (nombresDeArchivos.length > 0) {
             mensajeImagenesLabel.style.display = "block";
-            mensajeImagenesLabel.innerHTML = "Se subirán las siguientes imágenes: " /*+ nombresDeArchivos.map(nombre => `<em>${nombre}</em>`).join(', ')*/;
-                                                                                   //Tambien se podria mostrar el nombre de las imagenes, descomentar lo de arriba
+            mensajeImagenesLabel.innerHTML = `Se subirán las siguientes imágenes: ${nombresDeArchivos.map(nombre => `<em>${nombre}</em>`).join(', ')}`;
+        } else {
+            mensajeImagenesLabel.style.display = "none";
         }
-        
+
+        // Mostrar mensaje de advertencia para archivos eliminados
         if (removedFiles.length > 0) {
             Swal.fire({
                 icon: 'error',
@@ -114,8 +123,7 @@ function manejarRestriccionesDeImagenes() {
             });
         }
 
-        const dataTransfer = new DataTransfer();
-        validFiles.forEach(file => dataTransfer.items.add(file));
+        // Asignar el DataTransfer acumulado al input para mantener los archivos válidos seleccionados
         inputImagenes.files = dataTransfer.files;
     });
 }
@@ -123,6 +131,7 @@ function manejarRestriccionesDeImagenes() {
 // Llama a la función cuando se carga la página
 document.addEventListener('DOMContentLoaded', manejarRestriccionesDeImagenes);
 
+//--------------------------------------------------------------------------------------
 
 // Actualización dinámica de subcategorías según la categoría seleccionada
 document.getElementById('categoria-producto').addEventListener('change', function () {
