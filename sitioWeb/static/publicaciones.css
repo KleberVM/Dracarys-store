@@ -32,8 +32,9 @@
     width: 80%;
     left: 10%;
     
-   /* grid-template-columns: repeat(4, 233px);*/
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+   /* grid-template-columns: repeat(4, 233px);
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));*/
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1rem;
     margin: 2px;
 }
