@@ -44,6 +44,16 @@ document.addEventListener('DOMContentLoaded', function () {
     cartPopup.addEventListener('mouseenter', calcularTotalCarrito);
 
 });
+
+
+function actualizarContadorCarrito(cantidad) {
+    const carritoContador = document.getElementById('carrito-contador');
+    if (carritoContador) {
+        carritoContador.textContent = cantidad;
+    }
+}
+
+
 // Función para agregar al carrito usando fetch
 function agregarAlCarrito(productId) {
     //alert('estas en agregar al carrito');
@@ -61,6 +71,7 @@ function agregarAlCarrito(productId) {
             //Swal.fire(data.menssage + "PRODUCTO AGREGADO AL CARRITO");
             alert(data.mensaje);
             actualizarPopup(data.productos); // Pasar los productos a la función actualizarPopup
+            actualizarContadorCarrito(data.cantidad_carrito);  // Actualizar el contador
         } else {
             alert('Error: ' + data.mensaje);
         }
@@ -85,6 +96,7 @@ function eliminarDelCarrito(productId) {
             carrito = data.productos.map(producto => producto.id);
             //alert(data.mensaje);
             actualizarPopup(data.productos); // Actualiza el popup después de eliminar
+            actualizarContadorCarrito(data.productos.length);  // Actualizar el contador
         } else {
             //alert('Error: ' + data.mensaje);
         }
@@ -150,76 +162,3 @@ function getCookie(name) {
     return cookieValue;
 }
 
-//Funcion para el CONTADOR del carrito//
-document.addEventListener("DOMContentLoaded", function () {
-    updateCartCount();
-
-    // Escuchar eventos de eliminación de productos
-    document.querySelectorAll(".remove-from-cart").forEach(button => {
-        button.addEventListener("click", function () {
-            const item = this.closest(".cart-item");
-            item.remove();  // Remover el producto del carrito en el DOM
-
-            // Actualizar el contador
-            updateCartCount();
-        });
-    });
-});
-
-function updateCartCount() {
-    const cartCountDisplay = document.querySelector(".dropbtn span");
-    
-    if (cartCountDisplay) {
-        const cartCount = carrito.length; // Obtener el número de productos en el carrito
-        cartCountDisplay.textContent = cartCount; // Actualizar el número en el contador
-
-        // Asegura el estilo
-        cartCountDisplay.style.backgroundColor = "#FFA500";
-        cartCountDisplay.style.color = "white";
-        cartCountDisplay.style.fontWeight = "bold";
-        cartCountDisplay.style.fontSize = "14px";
-        cartCountDisplay.style.padding = "2px 6px";
-        cartCountDisplay.style.borderRadius = "50%";
-        cartCountDisplay.style.marginLeft = "8px";
-        cartCountDisplay.style.boxShadow = "0px 2px 4px rgba(0, 0, 0, 0.2)";
-        cartCountDisplay.style.display = "inline-block";
-    }
-}
-
-function actualizarPopup(productos) {
-    const cartPopup = document.getElementById('cart-popup');
-    cartPopup.innerHTML = ''; // Limpiar contenido previo
-
-    cartPopup.innerHTML += `<h3>Carrito de Compras</h3>`;
-
-    if (!Array.isArray(carrito) || carrito.length === 0) {
-        cartPopup.innerHTML += `<p>No hay productos en el carrito.</p>`;
-    } else {
-        let total = 0;
-
-        carrito.forEach(id => {
-            const producto = productos.find(p => p.id === id);
-            if (producto) {
-                total += producto.precio;
-                cartPopup.innerHTML += `
-                    <div class="cart-item" id="cartItems" data-precio="${producto.precio}">
-                        <span>${producto.nombre} - ${producto.precio.toFixed(2)} Bs</span>
-                        <button class="remove-from-cart" data-id="${producto.id}">Eliminar</button>
-                    </div>
-                `;
-            }
-        });
-
-        cartPopup.innerHTML += `<p class="cart-total">Total: <strong id="cart-total">${total.toFixed(2)}</strong> Bs</p>`;
-
-        const botonesEliminar = cartPopup.querySelectorAll('.remove-from-cart');
-        botonesEliminar.forEach(boton => {
-            boton.addEventListener('click', function () {
-                const productId = this.getAttribute('data-id');
-                eliminarDelCarrito(productId);
-            });
-        });
-    }
-
-    updateCartCount(); // Llama después de actualizar el popup
-}

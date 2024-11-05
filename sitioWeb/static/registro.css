@@ -11,7 +11,7 @@
     align-items: center;
     height: 100vh;
     /*background: linear-gradient(135deg, #6D83F2, #B667F1);*/
-    background: white;
+    background: var(--white);
   }
   
   .container {
@@ -40,7 +40,7 @@
     align-items: center;
    /* justify-content: center;*/
     padding: 20px;
-    color: white;
+    color: var(--white);
   }
   .left-section:hover{
     transition: all 1s;
@@ -105,7 +105,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: white;
+    background-color: var(--white);
     border-radius: 20px;
     box-shadow: 5px 6px 10px black;
     transition: all 1s;
@@ -117,7 +117,7 @@
   }
   
   .login-box {
-    color: #014040;
+    color: var(--secondary-color);
     width: 100%;
     height: 100%;
    /* max: width 100px; ;/max: width:320px*/
@@ -131,7 +131,7 @@
     color: #333;
   }
   h2{
-    color: #014040;
+    color: var(--secondary-color);
   }
   
   .input-box {
@@ -142,7 +142,7 @@
     border: none;
   }
   .input:hover{
-    border: 1px solid  #02735E;
+    border: 1px solid  var(--primary-color);
   }
   
   .input-box input {
@@ -161,7 +161,7 @@
     top: 50%;
     left: 10px;
     transform: translateY(-50%);
-    color:#02735E;
+    color: var(--primary-color);
     pointer-events: none;
     transition: 0.3s;
     opacity: 0.5;
@@ -171,7 +171,7 @@
   .input-box input:valid ~ label {
     top: -10px;
     left: 10px;
-    color: #014040;
+    color: var(--secondary-color);
     font-size: 12px;
     opacity: 10;
   }
@@ -180,7 +180,7 @@
     width: 100%;
     padding: 10px;
     /*background: linear-gradient(135deg, #6D83F2, #B667F1);*/
-    background: #02735E;
+    background: var(--primary-color);
     border: none;
     border-radius: 5px;
     color: #fff;
@@ -191,11 +191,11 @@
   
   .btn:hover {
     /*background: linear-gradient(135deg, #5A74E3, #A454D8);*/
-    background: #014040;
+    background: var(--secondary-color);
     box-shadow: 1px 1px 2px rgb(100, 95, 95);
   }
   .btn:active {
-    background: orange;
+    background: var(--tertiary-color);
     box-shadow: 2px 2px 2px black;
     color: black;
     transform: scale(0.98); 
@@ -248,7 +248,7 @@
     padding: 10px 0; /* Ajusta el padding si es necesario */
   }
   .CancelarRegistro:hover{
-    background-color: red; 
+    background-color: var(--eliminarHover); 
   }
   .CancelarRegistro:active{
     background-color: var(--tertiary-color);
@@ -282,7 +282,7 @@
 }
 
 .toast.error {
-    background-color: #dc3545; /* Color de fondo para error */
+    background-color: var(--eliminarColor); /* Color de fondo para error */
 }
 
 .toast.show {
