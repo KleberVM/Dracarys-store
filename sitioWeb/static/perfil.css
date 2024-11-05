@@ -280,14 +280,14 @@ label {
 }
 
 .modal-buttons button#cancelar-nombre {
-    background-color: var(--red); /* Botón de cancelar en rojo */
+    background-color: var(--eliminarColor); /* Botón de cancelar en rojo */
 } 
 .modal-buttons button#cancelar-correo {
-    background-color: var(--red); /* Botón de cancelar en rojo */
+    background-color: var(--eliminarColor); /* Botón de cancelar en rojo */
 }  
 
 .modal-buttons button#cancelar-celular {
-    background-color: var(--red); /* Botón de cancelar en rojo */
+    background-color: var(--eliminarColor); /* Botón de cancelar en rojo */
 }               
 
 /*----------------fin modal nombre*/
@@ -327,7 +327,7 @@ label {
     color: var(--white); /* Color del texto */  
 }
 .logoutS:hover{
-    background-color: var(--red);
+    background-color: var(--eliminarColor);
     
 }
 .logout, .ofertarM {

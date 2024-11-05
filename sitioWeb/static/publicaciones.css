@@ -120,7 +120,7 @@
 }
 
 .product-card .precio {
-    color: var(--red);
+    color: var(--eliminarColor);
     font-size: 18px;
     max-height: 4.5em; /* Ajusta este valor para permitir 3 líneas de texto */
     overflow: hidden;

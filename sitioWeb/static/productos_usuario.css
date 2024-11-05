@@ -99,7 +99,7 @@
 }
 
 .checkbox-burbuja input:checked + span {
-    background-color: var(--red);
+    background-color: var(--eliminarColor);
 }
 
 .checkbox-burbuja span:after {
@@ -196,7 +196,7 @@
     padding-top: 20%;
     font-size: 18px;
     text-align: center;
-    color: var(--red);
+    color: var(--eliminarColor);
     display: none;
 }
 /*Estilos de los mensajes que se mostraran cuando no haya productos para  mostrar*/
@@ -265,7 +265,7 @@
 }
 
 .checkbox-burbuja input:checked + span {
-    background-color: var(--red); /* Color al estar seleccionado */
+    background-color: var(--eliminarColor); /* Color al estar seleccionado */
 }
 
 .checkbox-burbuja span:after {
@@ -368,7 +368,7 @@
 
 /* Estilo para el estado inactivo (rojo) */
 .boton-estado.inactivo {
-    background-color: var(--red); /* Rojo */
+    background-color: var(--eliminarColor); /* Rojo */
 }
 
 
@@ -661,7 +661,7 @@ input[type="file"] {
 }
 
 .btn-secondary {
-    background-color: var(--red);
+    background-color: var(--eliminarColor);
 }
 
 .btn:hover {

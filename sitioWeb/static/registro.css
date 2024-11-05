@@ -248,7 +248,7 @@
     padding: 10px 0; /* Ajusta el padding si es necesario */
   }
   .CancelarRegistro:hover{
-    background-color: var(--red_hover); 
+    background-color: var(--eliminarHover); 
   }
   .CancelarRegistro:active{
     background-color: var(--tertiary-color);
@@ -282,7 +282,7 @@
 }
 
 .toast.error {
-    background-color: var(--red); /* Color de fondo para error */
+    background-color: var(--eliminarColor); /* Color de fondo para error */
 }
 
 .toast.show {
