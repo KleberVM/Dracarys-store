@@ -32,9 +32,8 @@
     width: 80%;
     left: 10%;
     
-   /* grid-template-columns: repeat(4, 233px);
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));*/
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+   /* grid-template-columns: repeat(4, 233px)*/
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
     gap: 1rem;
     margin: 2px;
 }
@@ -82,6 +81,8 @@
     color: #02735e;
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
+    overflow: hidden; /* Oculta el contenido que excede */
+    text-overflow: ellipsis; /* Muestra "..." si hay un desbordamiento */
 }
 
 .product-card:hover h3 {
@@ -92,6 +93,8 @@
     color: #ffffff;
     font-size: 16px; /* Ajustado a un tamaño más visible */
     margin-bottom: 0.5rem;
+    overflow: hidden; /* Oculta el contenido que excede */
+    text-overflow: ellipsis; /* Muestra "..." si hay un desbordamiento */
 }
 
 .product-card:hover h2 {
