@@ -78,7 +78,7 @@
 }
 
 .product-card h3 {
-    color: #02735e;
+    color: var(--primary-color);
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
     overflow: hidden; /* Oculta el contenido que excede */
@@ -98,7 +98,7 @@
 }
 
 .product-card:hover h2 {
-    color: #02735e;
+    color: var(--primary-color);
 }
 
 .agregar-button {
