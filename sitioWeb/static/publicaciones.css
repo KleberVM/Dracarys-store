@@ -72,6 +72,37 @@
     text-overflow: ellipsis;
     white-space: normal;
 }
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 500px;
+    max-height: 80%; /* Limita la altura */
+    overflow-y: auto; /* Agrega scroll si es necesario */
+}
+#modal-text {
+    white-space: normal; /* Permite que el texto se ajuste en varias líneas */
+    word-wrap: break-word; /* Ajusta las palabras largas */
+}
+.close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
 
 .product-card:hover p {
     color: var(--white);
