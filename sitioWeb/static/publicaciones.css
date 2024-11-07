@@ -72,6 +72,8 @@
     text-overflow: ellipsis;
     white-space: normal;
 }
+/* //da color a la ventana para ver los detalles pero arruina el login */
+/* 
 .modal {
     display: none;
     position: fixed;
@@ -90,18 +92,54 @@
     border-radius: 5px;
     width: 80%;
     max-width: 500px;
-    max-height: 80%; /* Limita la altura */
-    overflow-y: auto; /* Agrega scroll si es necesario */
+    max-height: 80%; 
+    overflow-y: auto; 
 }
 #modal-text {
-    white-space: normal; /* Permite que el texto se ajuste en varias líneas */
-    word-wrap: break-word; /* Ajusta las palabras largas */
+    white-space: normal; 
+    word-wrap: break-word; 
 }
 .close {
     float: right;
     font-size: 24px;
     cursor: pointer;
+} */
+
+/* Encapsula los estilos de la ventana modal */
+.modal-container .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
 }
+
+.modal-container .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 500px;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.modal-container #modal-text {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.modal-container .close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
 
 
 .product-card:hover p {
