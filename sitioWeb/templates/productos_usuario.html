@@ -74,13 +74,13 @@ Perfil
             </div>
             <span class="precio-productoo">{{ producto.precio }} Bs</span>
 
-            <button class="boton-estado {% if producto.estado_producto %}activo{% else %}inactivo{% endif %}">
+            <span class="boton-estado {% if producto.estado_producto %}activo{% else %}inactivo{% endif %}">
                 {% if producto.estado_producto %}
                     Activo
                 {% else %}
                     Inactivo
                 {% endif %}
-            </button>
+            </span>
             <div class="fecha-publicacion"> 
                 <p class="fecha-publicacionn">
                     Publicado el: {{ producto.fecha_creacion|date:"d/m/Y H:i" }}
