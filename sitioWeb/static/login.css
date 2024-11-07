@@ -215,6 +215,7 @@
     font-size: 16px;
 }
 
+/* para definir el color de los mensajes flotantes al momento de logearse */
 .alert.success {
     background-color: var(--primary-color); /* Color verde para mensajes de éxito */
 }

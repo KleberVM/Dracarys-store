@@ -48,6 +48,7 @@ if (span) {
     }
 }
 
+// para q el mensaje flotante desaparesca despues de 2000 milisegundos (2 segundos)
 document.addEventListener("DOMContentLoaded", function() {
     // Selecciona todas las alertas y las oculta después de 5 segundos
     const alerts = document.querySelectorAll('.alert');
