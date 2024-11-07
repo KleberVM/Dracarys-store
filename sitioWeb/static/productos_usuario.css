@@ -165,6 +165,16 @@
         padding: 5px 8px;
         font-size: 11px;
     }
+    .eliminar-container {
+        display: flex;
+        padding-right: 10px;
+        align-items: center;
+        gap: 10px;
+        margin-left: auto;
+    }
+    #eliminarSeleccionados {
+        padding: 4px 3px;
+    }
 }
 
 @media (max-width: 480px) {
