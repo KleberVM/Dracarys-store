@@ -93,3 +93,22 @@ function toggleCheckboxes(source) {
         checkbox.checked = source.checked;
     });
 }
+
+
+// controla y muestra la cantidad de caractertes indicados para q no salga del div
+document.addEventListener("DOMContentLoaded", function() {
+    const descripcion = document.querySelector(".descripcion-productoo");
+    if (descripcion.textContent.length > 20) {
+        descripcion.textContent = descripcion.textContent.slice(0, 50) + "...";
+    }
+});
+
+// para las funciones de la ventana flotantes de los detalles del producto
+function mostrarDescripcionCompleta(descripcionCompleta) {
+    document.getElementById("modal-text").textContent = descripcionCompleta;
+    document.getElementById("modal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}

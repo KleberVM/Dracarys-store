@@ -330,10 +330,14 @@
 }
 .ContenedorDescripcion{
     margin: 0px;
-    width: 99%;
-    height: 85px;
     box-shadow: 0.5px 0.5px 20px 1px rgb(230, 221, 221);
     border-radius: 5px;
+    /* para centrar el contenido de <P> */
+    display: flex;
+    align-items: center;  /* Centra verticalmente */
+    justify-content: center;  /* Centra horizontalmente */
+    height: 85px;  /* Ajusta la altura del div según lo necesario */
+    width: 100%;  /* O ajusta el ancho si es necesario */
 }
 /* Descripción del producto */
 .descripcion-productoo {
