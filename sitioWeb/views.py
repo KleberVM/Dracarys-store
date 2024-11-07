@@ -25,7 +25,7 @@ def baseView(request):
         
     productos = Producto.objects.filter(estado_producto=True)  # solo mostraré los productos que estén activos
     categorias = Categoria.objects.prefetch_related('subcategorias').all()  # Obtiene todas las categorías y sus subcategorías   
-    carritos = CarritoProducto.objects.filter(usuario=user)
+    carritos = CarritoProducto.objects.filter(usuario=user,producto__estado_producto=True)
     cantidad_carrito = carritos.count()  # Calcula la cantidad de productos en el carrito
     
     return render(request, "base.html", {
@@ -94,7 +94,7 @@ def perfil_view(request):
         return redirect('login')  # Redirigir al login si no está autenticado
     
     user = Usuario.objects.get(idUsuario=user_id)
-    carritos = CarritoProducto.objects.filter(usuario=user)
+    carritos = CarritoProducto.objects.filter(usuario=user,producto__estado_producto=True)
     cantidad_carrito = carritos.count()
 
     if request.method == 'POST':
@@ -136,10 +136,10 @@ def eliminar_del_carrito(request, producto_id):
             mensaje = f"El producto ha sido eliminado del carrito."
             
              # Cantidad de productos en el carrito después de eliminar
-            cantidad_carrito = CarritoProducto.objects.filter(usuario=user).count()
+            cantidad_carrito = CarritoProducto.objects.filter(usuario=user,producto__estado_producto=True).count()
 
             # Recuperar todos los productos en el carrito
-            productos_en_carrito = CarritoProducto.objects.filter(usuario=user)
+            productos_en_carrito = CarritoProducto.objects.filter(usuario=user,producto__estado_producto=True)
             lista_productos = [{'id': item.producto.id, 'nombre': item.producto.nombre, 'precio': int(item.producto.precio)} for item in productos_en_carrito]
 
             return JsonResponse({
@@ -182,9 +182,9 @@ def agregar_al_carrito(request, producto_id):
                 mensaje = f"El producto '{producto.nombre}' ya está en tu carrito."
 
             # Cantidad de productos en el carrito después de agregar
-            cantidad_carrito = CarritoProducto.objects.filter(usuario=user).count()
+            cantidad_carrito = CarritoProducto.objects.filter(usuario=user,producto__estado_producto=True).count()
             # Recuperar todos los productos en el carrito
-            productos_en_carrito = CarritoProducto.objects.filter(usuario=user)
+            productos_en_carrito = CarritoProducto.objects.filter(usuario=user,producto__estado_producto=True)
             lista_productos = [{'id': item.producto.id, 'nombre': item.producto.nombre, 'precio': int(item.producto.precio)} for item in productos_en_carrito]
 
             print(f"Mensaje enviado: {mensaje}")
@@ -214,7 +214,7 @@ def cargar_provincias_por_departamento(request):
 def ofertarMView(request):
     # Obtener el usuario desde la sesión
     user_id = request.session.get('user_id')
-    carritos = CarritoProducto.objects.filter(usuario=user_id)
+    carritos = CarritoProducto.objects.filter(usuario=user_id,producto__estado_producto=True)
     # Si no hay usuario en sesión, redirigir al login
     if not user_id:
         return redirect('login')
@@ -270,7 +270,7 @@ def ofertarMView(request):
 def mis_materiales(request):
     user_id = request.session.get('user_id')
     user = get_object_or_404(Usuario, idUsuario=user_id)
-    carritos = CarritoProducto.objects.filter(usuario=user_id)
+    carritos = CarritoProducto.objects.filter(usuario=user_id,producto__estado_producto=True)
     cantidad_carrito = carritos.count()
     # Recupera todos los productos del usuario autenticado
     productos = Producto.objects.filter(usuario=user_id)
@@ -288,7 +288,7 @@ def mis_materiales(request):
 def detalle_producto(request, producto_id):
     user_id = request.session.get('user_id')
     user = get_object_or_404(Usuario, idUsuario=user_id)
-    carritos = CarritoProducto.objects.filter(usuario=user_id)
+    carritos = CarritoProducto.objects.filter(usuario=user_id,producto__estado_producto=True)
     cantidad_carrito = carritos.count()
 
     producto = get_object_or_404(Producto, id=producto_id)
@@ -395,5 +395,3 @@ def eliminar_productos(request):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     return JsonResponse({'error': 'Método no permitido.'}, status=405)
-
-
