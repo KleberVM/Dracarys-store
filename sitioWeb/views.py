@@ -54,6 +54,17 @@ def login_view(request):
             messages.error(request, 'Usuario o contraseña incorrectos')
             return redirect('base')  # Redirige a la página principal
     
+    user_id = request.session.get('user_id')
+    user = None
+    if user_id:
+        user = Usuario.objects.get(idUsuario=user_id)
+
+    if not user:
+        # Agregar el parámetro `login=1` a la URL para que el modal se abra
+        return redirect('/?login=1')
+
+
+
     return render(request, 'base.html')
 
 # se añadio telefono con el valor de NumTelefono para mandarlo a la BD(celular)
