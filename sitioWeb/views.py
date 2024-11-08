@@ -307,10 +307,21 @@ def detalle_producto(request, producto_id):
     
     user = get_object_or_404(Usuario, idUsuario=user_id)
     
+    # Obtener el producto y verificar que pertenece al usuario autenticado
+    producto = get_object_or_404(Producto, id=producto_id)
+
+    # Verificar si el usuario actual es el propietario del producto
+    if producto.usuario_id != user_id:  # Asumiendo que Producto tiene un campo usuario que es una ForeignKey a Usuario
+        # Mostrar un mensaje de error y redirigir al usuario a otra página, como la lista de productos
+        messages.error(request, "No tienes permiso para editar este material.")
+        return redirect('mis_materiales')  # Redirige a una página segura
+
+
+
     carritos = CarritoProducto.objects.filter(usuario=user_id,producto__estado_producto=True)
     cantidad_carrito = carritos.count()
 
-    producto = get_object_or_404(Producto, id=producto_id)
+    #producto = get_object_or_404(Producto, id=producto_id)
     categorias = Categoria.objects.all()  # Traer todas las categorías
     subcategorias = subCategoria.objects.filter(categoria=producto.subcategoria.categoria)  # Subcategorías de la categoría del producto
     departamentos = Departamento.objects.all()  # Todos los departamentos
