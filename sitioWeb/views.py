@@ -280,7 +280,10 @@ def ofertarMView(request):
 
 def mis_materiales(request):
     user_id = request.session.get('user_id')
+    if not user_id:
+        return redirect('login')
     user = get_object_or_404(Usuario, idUsuario=user_id)
+
     carritos = CarritoProducto.objects.filter(usuario=user_id,producto__estado_producto=True)
     cantidad_carrito = carritos.count()
     # Recupera todos los productos del usuario autenticado
@@ -298,7 +301,12 @@ def mis_materiales(request):
 
 def detalle_producto(request, producto_id):
     user_id = request.session.get('user_id')
+
+    if not user_id:
+        return redirect('login')
+    
     user = get_object_or_404(Usuario, idUsuario=user_id)
+    
     carritos = CarritoProducto.objects.filter(usuario=user_id,producto__estado_producto=True)
     cantidad_carrito = carritos.count()
 
@@ -350,6 +358,7 @@ def detalle_producto(request, producto_id):
         #'imagenes': producto.imagenes.all(),
     })
 def eliminar_imagenes(request):
+    
     if request.method == 'POST':
         imagenes_a_eliminar = request.POST.getlist('imagenes_a_eliminar')
         
