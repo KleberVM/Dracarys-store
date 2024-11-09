@@ -65,9 +65,8 @@ Perfil
             </a>
 
             <a class="nombre-productoo" href="{% url 'detalle_producto' producto.id %}">
-                <h3>{{ producto.nombre }}</h3>
             </a>
-
+            <h3>{{ producto.nombre }}</h3>
             <h4 class="subcategoria-productoo">{{ producto.subcategoria.nombre }}</h4>
             <div class="ContenedorDescripcion">
                 <p class="descripcion-productoo">{{ producto.descripcion }}</p>

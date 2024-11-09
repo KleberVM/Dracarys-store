@@ -146,6 +146,7 @@
     color: var(--white);
 }
 
+
 .product-card h3 {
     color: #02735e;
     font-size: 1.2rem;
@@ -160,7 +161,7 @@
 
 .product-card h2 {
     color: #ffffff;
-    font-size: 16px; /* Ajustado a un tamaño más visible */
+    font-size: 2px; /* Ajustado a un tamaño más visible */
     margin-bottom: 0.5rem;
     overflow: hidden; /* Oculta el contenido que excede */
     text-overflow: ellipsis; /* Muestra "..." si hay un desbordamiento */

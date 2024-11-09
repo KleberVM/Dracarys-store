@@ -334,13 +334,28 @@
 }
 
 /* Nombre del producto */
-.nombre-productoo {
-    font-size: 14px;
-    font-weight: bold;
+.nombre-productoo h3{
+    font-size: 1.2rem;
     margin: 3px 0;
     text-align: center;
     color:var(--secondary-color);
     text-decoration: none;
+}
+/*.nombre-productoo h3 {
+    font-size: 1.2rem; /* Ajusta el tamaño de la fuente según tus necesidades */
+   /* margin: 0; /* Elimina los márgenes predeterminados */
+   /* text-align: center; /* Mantiene la alineación centrada, puedes cambiarla si lo deseas */
+  /*  color: var(--secondary-color); /* Mantiene el color definido */
+/*    text-decoration: none; /* Quita cualquier subrayado 
+
+}*/
+.tarjeta-productoo h3 {
+    text-align: center;
+    color: #02735e;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    overflow: hidden; /* Oculta el contenido que excede */
+    text-overflow: ellipsis; /* Muestra "..." si hay un desbordamiento */
 }
 
 /* Subcategoría del producto */
