@@ -45,6 +45,14 @@ document.getElementById('boton-cancelar-producto').addEventListener('click', fun
 });
 
 //--------------------------------------------------------------------------------------
+//Controla que el precio no se baje con scroll
+document.addEventListener('DOMContentLoaded', function() {
+    // Desactivar el scroll en el campo precio
+    document.getElementById('precio-producto').addEventListener('wheel', function(e) {
+        e.preventDefault(); // Esto evita que el scroll cambie el valor
+    });
+});
+
 
 function manejarRestriccionesDeImagenes() {
     const inputImagenes = document.getElementById('nuevas-imagenes');
