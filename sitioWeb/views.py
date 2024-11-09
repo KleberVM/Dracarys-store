@@ -256,6 +256,7 @@ def ofertarMView(request):
         producto = Producto(
             nombre=titulo,
             provincia=provincia_obj,
+            direccion=direccion,
             subcategoria=subcategoria_obj,
             precio=precio,
             descripcion=descripcion,
@@ -337,6 +338,7 @@ def detalle_producto(request, producto_id):
         producto.provincia_id = request.POST.get('provincia')
         producto.estado_id = request.POST.get('estado')
         producto.estado_producto = 'estado_producto' in request.POST
+        producto.direccion = request.POST.get('direccion')  # Guardar la dirección
 
         # Verificar que el nombre no sea nulo
         if not producto.nombre:
