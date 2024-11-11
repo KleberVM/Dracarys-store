@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Billetera{% endblock %}
+{% block asides %}
+    {% include 'cuenta.html' %}
+{% endblock %}
+{% block contenidos %}
+{% include 'barraPerfil.html' %}
+<div class="container2">
+    <h1>Billetera de {{ user.nombre }}</h1>
+    <h1>Saldo actual: {{ user.billetera }} Bs.</h1>
+
+    <!-- Mensajes de notificación -->
+    {% if messages %}
+        {% for message in messages %}
+        {% endfor %}
+    {% endif %}
+
+    <!-- Recargar saldo -->
+    <h3>Recargar saldo</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="accion" value="recargar"> <!-- Definir acción aquí -->
+        <label for="monto_recarga">Monto:</label>
+        <input type="number" name="monto_recarga" step="0.01" required>
+        <button type="submit">Recargar</button>
+    </form>
+
+    <!-- Transferir saldo -->
+    <h3>Transferir saldo</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="accion" value="transferir"> <!-- Acción para transferir -->
+        <label for="correo_destinatario">Correo del destinatario:</label>
+        <input type="email" name="correo_destinatario" required>
+        <label for="monto_transferencia">Monto:</label>
+        <input type="number" name="monto_transferencia" step="0.01" required>
+        <button type="submit">Transferir</button>
+    </form>
+
+    <!-- Retirar saldo -->
+    <h3>Retirar saldo</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="accion" value="retirar"> <!-- Acción para retirar -->
+        <label for="monto_retiro">Monto:</label>
+        <input type="number" name="monto_retiro" step="0.01" required>
+        <button type="submit">Retirar</button>
+    </form>
+{% endblock %}

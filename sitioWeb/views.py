@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import path
 from django.contrib import admin
-from .models import Usuario , Producto ,Categoria,CarritoProducto , Departamento,Provincia,subCategoria,EstadoDelProducto,Imagenes
+from .models import Usuario,Producto,Categoria,CarritoProducto , Departamento,Provincia,subCategoria,EstadoDelProducto,Imagenes
 from django.http import HttpResponse ,JsonResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate, login ,logout , authenticate
 from django.contrib import messages
@@ -11,6 +11,71 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+
+
+
+
+from decimal import Decimal
+
+def billetera_view(request):
+    # Verifica si el usuario está autenticado a través de la sesión
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return redirect('login')
+
+    # Obtiene el usuario a través de su ID
+    usuario = get_object_or_404(Usuario, idUsuario=user_id)
+
+    # Procesa las acciones de recargar, transferir y retirar saldo
+    if request.method == 'POST':
+        accion = request.POST.get('accion')  # Obtén la acción del formulario
+        
+        # Convierte el monto a Decimal
+        monto = Decimal(request.POST.get('monto_recarga') or request.POST.get('monto_transferencia') or request.POST.get('monto_retiro', 0))
+
+        if accion == 'recargar':
+            # Recarga saldo
+            usuario.billetera += monto
+            usuario.save()
+            messages.success(request, 'Saldo recargado exitosamente.')
+
+        elif accion == 'transferir':
+            correo_destinatario = request.POST.get('correo_destinatario')
+            destinatario = get_object_or_404(Usuario, correo=correo_destinatario)
+            
+            if monto > usuario.billetera:
+                messages.error(request, 'Saldo insuficiente para transferir.')
+            else:
+                # Comision para la cuenta ADMIN
+                comision = monto * Decimal(0.1)
+
+                # Descontar el monto del usuario
+                usuario.billetera -= monto
+                # Añadir el 90% al destinatario
+                destinatario.billetera += monto * Decimal(0.9)
+                # Añadir el 10% a la cuenta ADMIN
+                admin = get_object_or_404(Usuario, nombre='ADMIN')  # Asumiendo que el usuario ADMIN tiene el nombre 'ADMIN'
+                admin.billetera += comision
+
+                # Guardar los cambios
+                usuario.save()
+                destinatario.save()
+                admin.save()
+
+                messages.success(request, 'Transferencia realizada con éxito, menos la comisión.')
+
+        elif accion == 'retirar':
+            if monto > usuario.billetera:
+                messages.error(request, 'Saldo insuficiente para retirar.')
+            else:
+                usuario.billetera -= monto
+                usuario.save()
+                messages.success(request, 'Retiro realizado exitosamente.')
+
+    # Renderiza la página de billetera
+    return render(request, 'billetera.html', {'user': usuario, 'saldo': usuario.billetera})
+
+
 
 
 
