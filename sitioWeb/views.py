@@ -12,6 +12,7 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 
+from django.db import transaction
 
 
 from decimal import Decimal
@@ -77,58 +78,78 @@ def billetera_view(request):
 
 # Verifica si el usuario está autenticado antes de mostrar el carrito
 def transaccion_view(request):
-    # Verifica si el usuario está autenticado a través de la sesión
+    # Verifica si el usuario está autenticado
     user_id = request.session.get('user_id')
     if not user_id:
         return redirect('login')
 
-    # Obtiene el usuario a través de su ID
+    # Obtiene el usuario y los productos en su carrito
     usuario = get_object_or_404(Usuario, idUsuario=user_id)
-    
-    # Obtiene los productos en el carrito del usuario
     productos_en_carrito = CarritoProducto.objects.filter(usuario=usuario)
-    
+
+    # Verifica si el carrito está vacío
     if not productos_en_carrito.exists():
         messages.info(request, 'No tienes productos en tu carrito.')
-        return redirect('base')  # Redirige a la página principal si el carrito está vacío
-    
-    # Calcula el total del carrito (si no hay productos, total será 0)
-    total = sum([producto.producto.precio for producto in productos_en_carrito]) or Decimal(0)
+        return redirect('base')
 
-    # Calcula el descuento del 10%
-    descuento = total * Decimal(0.1) if total > 0 else Decimal(0)
-    total_con_descuento = total - descuento
+    # Calcula el total y la comisión
+    total = sum(item.producto.precio for item in productos_en_carrito)
+    comision = total * Decimal(0.1)
+    total_con_comision = total + comision
 
-    # Procesa las acciones de la transacción (como pagar usando la billetera)
-    if request.method == 'POST':
-        accion = request.POST.get('accion')  # Obtiene la acción del formulario
+    # Procesa la confirmación de compra
+    if request.method == 'POST' and 'confirmar_compra' in request.POST:
+        # Verifica que el usuario tenga saldo suficiente
+        if usuario.billetera < total_con_comision:
+            messages.error(request, "No tienes suficiente saldo en tu billetera para esta compra.")
+            return redirect('transaccion')
 
-        if accion == 'confirmar_compra':
-            # Verifica si el usuario tiene suficiente saldo
-            if usuario.billetera < total_con_descuento:
-                messages.error(request, 'Saldo insuficiente para realizar la compra.')
-            else:
-                # Descuenta el total con descuento de la billetera del usuario
-                usuario.billetera -= total_con_descuento
+        # Transacción de compra
+        try:
+            with transaction.atomic():
+                # Transfiere el dinero a los propietarios de los productos y desactiva el producto
+                for item in productos_en_carrito:
+                    producto = item.producto
+                    propietario = producto.usuario
+                    if propietario != usuario:  # Evita transferencias a sí mismo
+                        propietario.billetera += producto.precio
+                        propietario.save()
+
+                    # Marca el producto como inactivo
+                    producto.estado_producto = False
+                    producto.save()
+
+                # Deduce el total (incluyendo comisión) de la billetera del usuario
+                usuario.billetera -= total_con_comision
                 usuario.save()
-                
-                # Limpia el carrito del usuario
+
+                # Obtiene o crea al usuario 'ADMIN' y le asigna la comisión
+                admin_user, created = Usuario.objects.get_or_create(
+                    nombre='ADMIN',
+                    correo='ADMIN@gmail.com',
+                    defaults={'billetera': Decimal(0)}
+                )
+                admin_user.billetera += comision
+                admin_user.save()
+
+                # Vacía el carrito
                 productos_en_carrito.delete()
-                
-                messages.success(request, 'Compra realizada exitosamente.')
 
-        elif accion == 'cancelar_compra':
-            productos_en_carrito.delete()
-            messages.info(request, 'Compra cancelada.')
-            return redirect('base')  # Redirige al usuario a la página principal o al carrito
+                messages.success(request, "Compra confirmada. Los pagos se han realizado correctamente y los productos fueron desactivados.")
 
-    # Renderiza la plantilla con los datos necesarios
+        except Exception as e:
+            messages.error(request, f"Ocurrió un error al procesar la compra: {e}")
+            return redirect('transaccion')
+
+        return redirect('base')
+
+    # Renderiza la vista de transacción
     return render(request, 'transaccion.html', {
         'user': usuario,
-        'productos_en_carrito': productos_en_carrito,
+        'carritos': productos_en_carrito,
         'total': total,
-        'descuento': descuento,
-        'total_con_descuento': total_con_descuento,
+        'comision': comision,
+        'total_comision': total_con_comision,
         'saldo': usuario.billetera,
     })
 
