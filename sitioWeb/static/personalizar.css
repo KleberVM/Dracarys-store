@@ -55,11 +55,19 @@
     position: absolute;
     top: 10px;
     right: 15px;
-    font-size: 24px;
+    font-size: 30px;
     cursor: pointer;
+    color: var(--tertiary-color);
 }
 
 
+
+
+
+
+
+
+/* PARA CAMBAIR LOGO */
 
 
 /* Estilo para la imagen seleccionada */
@@ -86,6 +94,34 @@
 
 
 
+.ventana-estilos-image-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 10px; /* Espacio entre los elementos */
+}
+
+.image-item {
+    text-align: center;
+    width: 120px; /* Ajusta el ancho para hacer los elementos más compactos */
+}
+
+.selectable-image {
+    width: 100%; /* Ocupa el ancho completo del contenedor */
+    height: auto;
+    border-radius: 5px; /* Opcional: bordes redondeados */
+}
+
+.image-caption {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #333;
+}
+
+
+
+
+
 
 /* Estilos para la ventana flotante Cambiar Logo */
 .modal-cambiar-logo {
@@ -104,7 +140,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
+    background-color: var(--primary-color);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -142,7 +178,7 @@ button {
     cursor: pointer;
     border: none;
     border-radius: 5px;
-    background-color: #02735E; /* Color de fondo predeterminado */
+    background-color: var(--tertiary-color); /* Color de fondo predeterminado */
     color: white;
 }
 
@@ -178,4 +214,25 @@ button:active {
 
 #guardar-logo:active {
     background-color: #1e7e34;
+}
+
+
+#image-preview-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    max-height: 300px; /* Ajusta el alto máximo según necesites */
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+#image-preview {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    border-radius: 8px; /* Opcional: redondear bordes */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Opcional: sombra */
+    display: none; /* Solo se muestra cuando hay una imagen cargada */
 }

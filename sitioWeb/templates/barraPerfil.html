@@ -19,15 +19,27 @@
         <span class="ventana-estilos-close">&times;</span>
         <h2>Elije un Tema</h2>
         <div class="ventana-estilos-image-container">
-            <img src="{% static 'temas/1.png' %}" alt="Imagen 1" class="selectable-image">
-            <img src="{% static 'temas/2.png' %}" alt="Imagen 2" class="selectable-image">
-            <img src="{% static 'temas/3.png' %}" alt="Imagen 3" class="selectable-image">
-            <img src="{% static 'temas/4.png' %}" alt="Imagen 4" class="selectable-image">
-            
+            <div class="image-item">
+                <img src="{% static 'temas/1.png' %}" alt="Imagen 1" class="selectable-image">
+                <p class="image-caption">Tema 1</p>
+            </div>
+            <div class="image-item">
+                <img src="{% static 'temas/2.png' %}" alt="Imagen 2" class="selectable-image">
+                <p class="image-caption">Tema 2</p>
+            </div>
+            <div class="image-item">
+                <img src="{% static 'temas/3.png' %}" alt="Imagen 3" class="selectable-image">
+                <p class="image-caption">Tema 3</p>
+            </div>
+            <div class="image-item">
+                <img src="{% static 'temas/4.png' %}" alt="Imagen 4" class="selectable-image">
+                <p class="image-caption">Tema 4</p>
+            </div>
         </div>
         <p id="selected-image-info">Ninguna imagen seleccionada</p>
     </div>
 </div>
+
 
 
 
@@ -40,6 +52,7 @@
         <div id="image-preview-container">
             <img id="image-preview" src="" alt="Vista previa" style="display:none; max-width: 100%; height: auto; margin-top: 10px;">
         </div>
+        <p id="error-message" style="color: white; text-shadow: 4px 4px 8px rgb(0, 0, 0); display: none;">Archivo no válido. Por favor, sube una imagen.</p>
         <div class="button-container">
             <button id="subir-imagen">Subir Imagen</button>
             <button id="guardar-logo">Guardar</button>
