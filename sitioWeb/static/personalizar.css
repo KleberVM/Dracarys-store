@@ -74,3 +74,108 @@
     font-size: 16px;
     color: white;
 }
+
+#selected-image-info {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+/* Estilos para la ventana flotante Cambiar Logo */
+.modal-cambiar-logo {
+    display: none;           /* Oculta la ventana por defecto */
+    position: fixed;         /* Fija la ventana en la pantalla */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+    z-index: 1000;           /* Asegura que la ventana esté por encima de otros elementos */
+}
+
+.modal-cambiar-logo .modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    max-width: 400px;
+}
+
+.modal-cambiar-logo .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Hacer que el input ocupe todo el ancho disponible */
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+/* Contenedor de los botones */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* Estilos de los botones */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #02735E; /* Color de fondo predeterminado */
+    color: white;
+}
+
+button:hover {
+    background-color: #014040; /* Hover con un tono más oscuro */
+}
+
+button:active {
+    background-color: #005B47; /* Estado activo */
+}
+
+/* Estilos específicos para el botón Cancelar */
+#cancelar-logo {
+    background-color: #6c757d;
+}
+
+#cancelar-logo:hover {
+    background-color: #495057;
+}
+
+#cancelar-logo:active {
+    background-color: #5a6268;
+}
+
+/* Estilos específicos para el botón Guardar */
+#guardar-logo {
+    background-color: #28a745;
+}
+
+#guardar-logo:hover {
+    background-color: #218838;
+}
+
+#guardar-logo:active {
+    background-color: #1e7e34;
+}
