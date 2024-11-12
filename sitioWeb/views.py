@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import path
 from django.contrib import admin
-from .models import Usuario,Producto,Categoria,CarritoProducto , Departamento,Provincia,subCategoria,EstadoDelProducto,Imagenes
+from .models import Usuario,Producto,Categoria,CarritoProducto,Departamento,Provincia,subCategoria,EstadoDelProducto,Imagenes
 from django.http import HttpResponse ,JsonResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate, login ,logout , authenticate
 from django.contrib import messages
@@ -11,7 +11,6 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
-
 
 
 
@@ -38,7 +37,6 @@ def billetera_view(request):
             usuario.billetera += monto
             usuario.save()
             messages.success(request, 'Saldo recargado exitosamente.')
-
         elif accion == 'transferir':
             correo_destinatario = request.POST.get('correo_destinatario')
             destinatario = get_object_or_404(Usuario, correo=correo_destinatario)
@@ -63,7 +61,6 @@ def billetera_view(request):
                 admin.save()
 
                 messages.success(request, 'Transferencia realizada con éxito, menos la comisión.')
-
         elif accion == 'retirar':
             if monto > usuario.billetera:
                 messages.error(request, 'Saldo insuficiente para retirar.')
@@ -75,6 +72,65 @@ def billetera_view(request):
     # Renderiza la página de billetera
     return render(request, 'billetera.html', {'user': usuario, 'saldo': usuario.billetera})
 
+
+
+
+# Verifica si el usuario está autenticado antes de mostrar el carrito
+def transaccion_view(request):
+    # Verifica si el usuario está autenticado a través de la sesión
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return redirect('login')
+
+    # Obtiene el usuario a través de su ID
+    usuario = get_object_or_404(Usuario, idUsuario=user_id)
+    
+    # Obtiene los productos en el carrito del usuario
+    productos_en_carrito = CarritoProducto.objects.filter(usuario=usuario)
+    
+    if not productos_en_carrito.exists():
+        messages.info(request, 'No tienes productos en tu carrito.')
+        return redirect('base')  # Redirige a la página principal si el carrito está vacío
+    
+    # Calcula el total del carrito (si no hay productos, total será 0)
+    total = sum([producto.producto.precio for producto in productos_en_carrito]) or Decimal(0)
+
+    # Calcula el descuento del 10%
+    descuento = total * Decimal(0.1) if total > 0 else Decimal(0)
+    total_con_descuento = total - descuento
+
+    # Procesa las acciones de la transacción (como pagar usando la billetera)
+    if request.method == 'POST':
+        accion = request.POST.get('accion')  # Obtiene la acción del formulario
+
+        if accion == 'confirmar_compra':
+            # Verifica si el usuario tiene suficiente saldo
+            if usuario.billetera < total_con_descuento:
+                messages.error(request, 'Saldo insuficiente para realizar la compra.')
+            else:
+                # Descuenta el total con descuento de la billetera del usuario
+                usuario.billetera -= total_con_descuento
+                usuario.save()
+                
+                # Limpia el carrito del usuario
+                productos_en_carrito.delete()
+                
+                messages.success(request, 'Compra realizada exitosamente.')
+
+        elif accion == 'cancelar_compra':
+            productos_en_carrito.delete()
+            messages.info(request, 'Compra cancelada.')
+            return redirect('base')  # Redirige al usuario a la página principal o al carrito
+
+    # Renderiza la plantilla con los datos necesarios
+    return render(request, 'transaccion.html', {
+        'user': usuario,
+        'productos_en_carrito': productos_en_carrito,
+        'total': total,
+        'descuento': descuento,
+        'total_con_descuento': total_con_descuento,
+        'saldo': usuario.billetera,
+    })
 
 
 
