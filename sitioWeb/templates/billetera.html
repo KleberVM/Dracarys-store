@@ -6,48 +6,51 @@
 {% endblock %}
 {% block contenidos %}
 {% include 'barraPerfil.html' %}
-<div class="container22">
-    <div class="billetera">
+<div class="containerPadre" >
+    <div class="containerr">
         <h1>Billetera de {{ user.nombre }}</h1>
-        <h1>Saldo actual: {{ user.billetera }} Bs.</h1>
-    </div>
-
-    <!-- Mensajes de notificación -->
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
-    <div class="saldo">
-        <div class="recarga-saldo">
-
-            <!-- Recargar saldo -->
-            <h3>Recargar saldo</h3>
-            <form method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="accion" value="recargar"> <!-- Definir acción aquí -->
-                <label for="monto_recarga">Monto:</label>
-                <input type="number" name="monto_recarga" step="0.01" required>
-                <button type="submit">Recargar</button>
-            </form>
+        <div class="saldo-container">
+               <img id="chanchito-img" src="deposito.png" alt="Chanchito" width="40" height="40">
+               <h2>Saldo: <span id="saldo" class="oculto">{{ user.billetera }} Bs.</span></h2>
+               <button id="toggle-saldo" onclick="toggleSaldo()">👁️</button>
         </div>
-
-        <!-- Transferir saldo -->
-                
-
-
-        <div class="retirar-saldo">
-        <!-- Retirar saldo -->
-            <h3>Retirar saldo</h3>
-            <form method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="accion" value="retirar"> <!-- Acción para retirar -->
-                <label for="monto_retiro">Monto:</label>
-                <input type="number" name="monto_retiro" step="0.01" required>
-                <button type="submit">Retirar</button>
-            </form>
+        <!-- Mensajes de notificación -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        <div class="acciones">
+            <div class="accion">
+                <img src="depositar.png" alt="Depositar"  onclick="activarInput('deposito-input')" >
+                <button class="accion-btn" onclick="activarInput('deposito-input')">Depositar</button>
+            </div>
+                    
+            <div class="accion">
+                <img src="retirar.png" alt="Retirar"  onclick="activarInput('retiro-input')">
+                <button class="accion-btn" onclick="activarInput('retiro-input')">Retirar</button>
+            </div>
         </div>
+    
+         <!-- Recargar saldo -->
+         <form method="POST" id="deposito-input" class="input-form" style="display: none;" onsubmit="actualizarSaldo(event, 'deposito')">
+             {% csrf_token %}
+             
+             <label for="monto_deposito">Monto a depositar:</label>
+             <input type="number" id="monto_deposito"  step="0.01" required>
+             <button type="submit">Confirmar</button>
+         </form>
+         <form method="POST" id="retiro-input" class="input-form" style="display: none;" onsubmit="actualizarSaldo(event, 'retiro')">
+            {% csrf_token %}
+            <!-- Acción para retirar -->
+            
+            <label for="monto_retiro">Monto a retirar:</label>
+            <input type="number" id="monto_retiro" step="0.01" required>
+            <button type="submit">Confirmar</button>
+         </form>
     </div>
+</div>
+
 {% endblock %}
 {% block extra_js %}
     <script src="{% static 'perfil.js' %}"></script>
