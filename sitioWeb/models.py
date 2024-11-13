@@ -132,3 +132,16 @@ class CarritoProducto(models.Model):
 
     def __str__(self):
         return f"{self.producto.nombre} en el carrito de {self.usuario.nombre}"
+
+
+class ConfiguracionLogo(models.Model):
+    logo = models.ImageField(upload_to='logos/')
+    nombre = models.CharField(max_length=255, default="Logo")  # Campo nombre con valor predeterminado
+
+    class Meta:
+        db_table = "Logo"
+        verbose_name = "Configuracion del logo"
+        verbose_name_plural = "Configuracion del logo"
+
+    def __str__(self):
+        return self.nombre
