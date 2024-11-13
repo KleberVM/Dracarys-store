@@ -1,0 +1,30 @@
+
+.container22{
+
+    background-color: var(--secondary-color);
+    color: var(--white);
+    width: 100%;
+    align-items: center;
+    right: 0;
+    padding-top: 40px;
+
+    min-height: 100vh; /* Hace que ocupe al menos el 100% de la altura de la ventana */
+
+
+}
+.billetera h1{
+    color: var(--white);
+}
+
+main{
+    padding:0%;
+}
+
+button{
+    background-color: var(--primary-color);
+}
+.saldo{
+    display: flex;
+    gap:10%;
+    margin-left: 30%;
+}
