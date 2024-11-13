@@ -26,6 +26,8 @@ SECRET_KEY = 'django-insecure-5s%ua8)e+b1a88(20+61bbj@_qsi^4_(-3c(r+x-#p=4-bjxv@
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+#ALLOWED_HOSTS = [ 'DevsUpWEB.pythonanywhere.com', 'localhost']
 # media para que encuentre las imagenes que el usuario suba (donde guarda las imagenes)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -45,7 +47,6 @@ INSTALLED_APPS = [
     # importante debemos registrar las app que creemos
     'sitioWeb.apps.SitiowebConfig', #ubicacion "nombredelaApp.programa.metodo"
 ]
-#Igual para jazzmin
 JAZZMIN_SETTINGS = {
     "show_ui_builder": True,  # Habilita el UI Builder en Jazzmin
     # Puedes añadir más configuraciones personalizadas aquí
@@ -54,14 +55,15 @@ JAZZMIN_SETTINGS = {
     "custom_js": "common/js/main.js",
 
     #para personalizar por ejmplo mi propio logo
-    "site_logo": "images/LogoIS_Oficial.png",
-    "welcome_sign": "Bienvenido a la administració DRACARYS-Store",  # Texto de bienvenida
+    
+    "welcome_sign": "Bienvenido a la administración DRACARYS-Store",  # Texto de bienvenida
     "site_title": "Mi Admin",
-    "site_header": "Panel de Administración",
+    "site_header": "DRACARYS-Store",
     "site_brand": "Dracarys-Store",
     "site_icon": "images/favicon.ico",  # Para favicon, si tienes uno
     # Más configuraciones opcionales de Jazzmin
 }
+
 JAZZMIN_UI_TWEAKS = {
     "navbar_small_text": False,
     "footer_small_text": False,
@@ -93,7 +95,6 @@ JAZZMIN_UI_TWEAKS = {
         "success": "btn-success"
     }
 }
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -172,6 +173,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+#STATIC_ROOT=os.path.join(BASE_DIR, 'static')
+#borrar la carpeta static
+#python manage.py collectstatic
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
