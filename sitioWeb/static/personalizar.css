@@ -67,12 +67,14 @@
 
 
 
+/* SIN FUNCIONAR PORQUE NO HAY BOTON NI VENTANA >>>>>>>>>>>>>>>>>>>>>> */
+
 /* PARA CAMBAIR LOGO */
 
 
 /* Estilo para la imagen seleccionada */
 .selectable-image.selected {
-    border: 3px solid var(--tertiary-color); /* Un borde verde para resaltar la selección */
+    border: 3px solid red; /* Un borde verde para resaltar la selección */
     transform: scale(1.1); /* Aumentar ligeramente el tamaño */
     transition: transform 0.2s, border 0.2s;
 }
@@ -81,11 +83,9 @@
     margin-top: 20px;
     font-size: 16px;
     color: white;
-}
-
-#selected-image-info {
     display: none;
 }
+
 
 
 
@@ -115,7 +115,7 @@
 .image-caption {
     margin-top: 4px;
     font-size: 12px;
-    color: #333;
+    color: var(--white);
 }
 
 
@@ -236,3 +236,6 @@ button:active {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Opcional: sombra */
     display: none; /* Solo se muestra cuando hay una imagen cargada */
 }
+
+
+/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< HASTA AKI */
