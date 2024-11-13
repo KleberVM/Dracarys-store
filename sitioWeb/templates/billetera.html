@@ -10,7 +10,7 @@
     <div class="containerr">
         <h1>Billetera de {{ user.nombre }}</h1>
         <div class="saldo-container">
-               <img id="chanchito-img" src="deposito.png" alt="Chanchito" width="40" height="40">
+               <img id="chanchito-img" src="{% static 'saldoRE.png' %}" alt="Chanchito" width="40" height="40">
                <h2>Saldo: <span id="saldo" class="oculto">{{ user.billetera }} Bs.</span></h2>
                <button id="toggle-saldo" onclick="toggleSaldo()">👁️</button>
         </div>
@@ -22,12 +22,12 @@
         {% endif %}
         <div class="acciones">
             <div class="accion">
-                <img src="depositar.png" alt="Depositar"  onclick="activarInput('deposito-input')" >
+                <img src="{% static 'depositar.png' %}" alt="Depositar"  onclick="activarInput('deposito-input')" >
                 <button class="accion-btn" onclick="activarInput('deposito-input')">Depositar</button>
             </div>
                     
             <div class="accion">
-                <img src="retirar.png" alt="Retirar"  onclick="activarInput('retiro-input')">
+                <img src="{% static 'retirarRE.png' %}" alt="Retirar"  onclick="activarInput('retiro-input')">
                 <button class="accion-btn" onclick="activarInput('retiro-input')">Retirar</button>
             </div>
         </div>
