@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 class UserAdmin(admin.ModelAdmin):
     fields=["nombre","correo","estadoUsuario"]
     list_display =["nombre","correo","estadoUsuario"] #lo que se va mostrar
+    readonly_fields = ["nombre","correo"]  # Estos campos no son editables
     list_editable = ["estadoUsuario"]  # Permite editar el campo estadoUsuario desde la lista
     actions = None  # Esto elimina la acción de "Eliminar usuarios seleccionados" en el panel
 

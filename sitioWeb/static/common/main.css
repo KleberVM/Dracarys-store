@@ -1,8 +1,13 @@
 /* Colores base */
 :root {
-    --primary-color:#02735E; /* Verde esmeralda */
+    --primary-color: #02735E; /* Verde esmeralda */
     --secondary-color: #014040; /* Verde muy oscuro */
     --accent-color: #F27405; /* Naranja vibrante */
+    --accent-hover: #e15b00; /* Naranja oscuro */
+    --text-color: #333;
+    --background-color: #f4f4f4;
+    --white: #ffffff;
+
 }
 
 /* Fondo general y tipografía */
@@ -238,4 +243,31 @@ img {
 .btn-primary {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+/* Ocultar los botones de Guardar y continuar editando y el botón Histórico */
+
+#jazzy-actions .btn-info,
+#jazzy-actions .btn-secondary {
+    display: none; /* Oculta los botones */
+}
+
+/* Estilos para el botón Guardar */
+#jazzy-actions .btn-success{
+    background-color: var(--primary-color);
+}
+/* Estilo al pasar el ratón (hover) */
+#jazzy-actions .btn-success:hover {
+    background-color: var(--secondary-color); /* Naranja brillante en hover */
+    transform: scale(1.05); /* Efecto de agrandamiento */
+}
+/* Estilos para el botón Guardar */
+#jazzy-actions .btn-cancel{
+    color: white;
+    background-color: var(--accent-color);
+}
+/* Estilo al pasar el ratón (hover) */
+#jazzy-actions .btn-cancel:hover {
+    background-color: var(--accent-hover); /* Naranja brillante en hover */
+    transform: scale(1.05); /* Efecto de agrandamiento */
+}
+
 
