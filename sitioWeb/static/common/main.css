@@ -1,12 +1,7 @@
 /* Colores base */
 :root {
-<<<<<<< HEAD
-    --primary-color: #02735E; /* Verde esmeralda */
-    --secondary-color: #014040; /* Verde muy oscuro */
-=======
     --primary-color: #02735E;
     --secondary-color: #014040;
->>>>>>> Guilder
     --accent-color: #F27405; /* Naranja vibrante */
     --accent-hover: #e15b00; /* Naranja oscuro */
     --text-color: #333;
@@ -104,12 +99,8 @@ body {
 .field-nombre a{
     color: red;
 }
-.field-correo{
-    display: none;
-}
-.field-billetera{
-    display: none;
-}
+
+
 
 /* Campos de formulario */
 input[type="text"],
@@ -258,7 +249,6 @@ img {
 .btn-primary {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-<<<<<<< HEAD
 /* Ocultar los botones de Guardar y continuar editando y el botón Histórico */
 
 #jazzy-actions .btn-info,
@@ -287,5 +277,33 @@ img {
 }
 
 
-=======
->>>>>>> Guilder
+/*Modificando color de guardar en el ADMIN*/
+.btn.btn-success.form-control{
+    background-color: var(--primary-color);
+    border: #02735E;
+}
+.btn.btn-success.form-control:hover{
+    background-color: var(--secondary-color);
+    border: var(--secondary-color);
+}
+.btn.btn-success.form-control:active{
+    background-color: var(--accent-color);
+    border: var(--accent-color);
+}
+/*Boton que aparece en el panel de control el MODIFICAR*/
+.btn.btn-xs.btn-info.changelink{
+    background-color: var(--primary-color);
+}
+.btn.btn-xs.btn-info.changelink:hover{
+    background-color: var(--secondary-color);
+}
+/*Cambiando el color de Desplegable de cuenta CERRAR SESION*/
+.dropdown-menu.dropdown-menu-lg.dropdown-menu-left.show{
+    background-color: var(--primary-color);
+    box-shadow: 2px 2px 5px 1px var(--secondary-color);
+    color: white;
+}
+/*Color de letra del menu desplegagle de cuenta ADMIN*/
+.dropdown-header{
+    color: white;
+}
