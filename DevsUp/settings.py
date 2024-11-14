@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'sitioWeb.apps.SitiowebConfig', #ubicacion "nombredelaApp.programa.metodo"
 ]
 JAZZMIN_SETTINGS = {
-    "show_ui_builder": True,  # Habilita el UI Builder en Jazzmin
+    "show_ui_builder": False,  # Habilita el UI Builder en Jazzmin
     # Puedes añadir más configuraciones personalizadas aquí
     #Para que funcione mis propios css
     "custom_css": "common/main.css",
