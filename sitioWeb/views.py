@@ -16,6 +16,7 @@ from django.db import transaction
 
 
 from decimal import Decimal
+from decimal import Decimal, ROUND_HALF_UP
 
 def billetera_view(request):
     # Verifica si el usuario está autenticado a través de la sesión
@@ -25,6 +26,8 @@ def billetera_view(request):
 
     # Obtiene el usuario a través de su ID
     usuario = get_object_or_404(Usuario, idUsuario=user_id)
+    carritos = CarritoProducto.objects.filter(usuario=usuario, producto__estado_producto=True)
+    cantidad_carrito = carritos.count()
 
     # Procesa las acciones de recargar, transferir y retirar saldo
     if request.method == 'POST':
@@ -71,7 +74,7 @@ def billetera_view(request):
                 messages.success(request, 'Retiro realizado exitosamente.')
 
     # Renderiza la página de billetera
-    return render(request, 'billetera.html', {'user': usuario, 'saldo': usuario.billetera})
+    return render(request, 'billetera.html', {'user': usuario, 'saldo': usuario.billetera, 'carritos': carritos, 'cantidad_carrito': cantidad_carrito, 'is_profile_page': True})
 
 
 
@@ -86,6 +89,7 @@ def transaccion_view(request):
     # Obtiene el usuario y los productos en su carrito
     usuario = get_object_or_404(Usuario, idUsuario=user_id)
     productos_en_carrito = CarritoProducto.objects.filter(usuario=usuario)
+    cantidad_carrito = productos_en_carrito.count()
 
     # Verifica si el carrito está vacío
     if not productos_en_carrito.exists():
@@ -94,8 +98,8 @@ def transaccion_view(request):
 
     # Calcula el total y la comisión
     total = sum(item.producto.precio for item in productos_en_carrito)
-    comision = total * Decimal(0.1)
-    total_con_comision = total + comision
+    comision = (total * Decimal(0.1)).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP)
+    total_con_comision = (total + comision).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP)
 
     # Procesa la confirmación de compra
     if request.method == 'POST' and 'confirmar_compra' in request.POST:
@@ -151,6 +155,8 @@ def transaccion_view(request):
         'comision': comision,
         'total_comision': total_con_comision,
         'saldo': usuario.billetera,
+        'cantidad_carrito': cantidad_carrito,
+        'is_profile_page': True
     })
 
 

@@ -6,9 +6,9 @@
 {% endblock %}
 {% block contenidos %}
     {% include 'barraPerfil.html' %}
-    <div class="container2">
+    <div class="container-transaccion">
         <h1>Resumen de Compra</h1>
-        <h1>Nombre del usuario: "{{ user.nombre }}"</h1>
+        <h1>Usuario: "{{ user.nombre }}"</h1>
 
         <!-- Mensajes de notificación -->
         {% if messages %}
@@ -32,7 +32,7 @@
             <p>Comision (10%): <strong>{{ comision }}</strong> bs</p>
             <p><strong>Total después del comision: {{ total_comision }}</strong> bs</p>
         </div>
-        
+
         <!-- Botones de Confirmar y Cancelar -->
         <div class="buttons">
             <form method="POST">
@@ -44,5 +44,12 @@
                 <button type="submit" class="btn-cancelar">Cancelar Compra</button>
             </form>        
         </div>
+
+
+    </div>
+    <div class="saldo-container-transaccion">
+        <img id="chanchito-img" src="{% static 'saldoRE.png' %}" alt="Chanchito" width="40" height="40">
+        <h2>Saldo: <span id="saldo" class="oculto-transaccion">{{ user.billetera }} Bs.</span></h2>
+        <button class="ojito-transaccion"id="toggle-saldo" onclick="toggleSaldo()">👁️</button>
     </div>
 {% endblock %}
