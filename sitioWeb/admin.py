@@ -3,6 +3,8 @@ from .models import Usuario ,Categoria, subCategoria , Producto , Imagenes ,Depa
 
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django import forms
 
 # Register your models here.
 class UserAdmin(admin.ModelAdmin):
