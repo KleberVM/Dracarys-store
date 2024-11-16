@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import path
 from django.contrib import admin
-from .models import Usuario , Producto ,Categoria,CarritoProducto , Departamento,Provincia,subCategoria,EstadoDelProducto,Imagenes
+from .models import Usuario , Producto ,Categoria,CarritoProducto , Departamento,Provincia,subCategoria,EstadoDelProducto,Imagenes,ConfiguracionLogo
 from django.http import HttpResponse ,JsonResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate, login ,logout , authenticate
 from django.contrib import messages
@@ -27,13 +27,15 @@ def baseView(request):
     categorias = Categoria.objects.prefetch_related('subcategorias').all()  # Obtiene todas las categorías y sus subcategorías   
     carritos = CarritoProducto.objects.filter(usuario=user,producto__estado_producto=True)
     cantidad_carrito = carritos.count()  # Calcula la cantidad de productos en el carrito
-    
+    config_logo = ConfiguracionLogo.objects.first()  # Obtiene el primer registro del logo
+
     return render(request, "base.html", {
         'user': user,
         'productos': productos,
         'categorias': categorias,
         'carritos': carritos,
-        'cantidad_carrito': cantidad_carrito  # Añade el contador al contexto
+        'cantidad_carrito': cantidad_carrito,  # Añade el contador al contexto
+        'config_logo': config_logo
     })
 
 def login_view(request):
@@ -107,6 +109,7 @@ def perfil_view(request):
     user = Usuario.objects.get(idUsuario=user_id)
     carritos = CarritoProducto.objects.filter(usuario=user,producto__estado_producto=True)
     cantidad_carrito = carritos.count()
+    config_logo = ConfiguracionLogo.objects.first()
 
     if request.method == 'POST':
         # Si hay un archivo de imagen en la solicitud
@@ -127,7 +130,7 @@ def perfil_view(request):
             
         user.save()  # Guarda los cambios en la base de datos
 
-    return render(request, 'perfil.html', {'user': user,'is_profile_page': True,'carritos': carritos,'cantidad_carrito': cantidad_carrito})
+    return render(request, 'perfil.html', {'user': user,'is_profile_page': True,'carritos': carritos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo})
 
 def logout_request(request):
     logout(request)
@@ -226,10 +229,10 @@ def ofertarMView(request):
     # Obtener el usuario desde la sesión
     user_id = request.session.get('user_id')
     carritos = CarritoProducto.objects.filter(usuario=user_id,producto__estado_producto=True)
+    config_logo = ConfiguracionLogo.objects.first()
     # Si no hay usuario en sesión, redirigir al login
     if not user_id:
         return redirect('login')
-
     # Obtener el usuario o lanzar un 404 si no existe
     user = get_object_or_404(Usuario, idUsuario=user_id)
     cantidad_carrito = carritos.count()
@@ -276,7 +279,7 @@ def ofertarMView(request):
         return redirect('base')
 
     # Si la solicitud es GET, renderizar el formulario con el usuario
-    return render(request, 'ofertar.html', {'user': user,'is_profile_page': True,'carritos': carritos,'cantidad_carrito': cantidad_carrito})
+    return render(request, 'ofertar.html', {'user': user,'is_profile_page': True,'carritos': carritos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo})
 
 
 def mis_materiales(request):
@@ -286,6 +289,7 @@ def mis_materiales(request):
     user = get_object_or_404(Usuario, idUsuario=user_id)
 
     carritos = CarritoProducto.objects.filter(usuario=user_id,producto__estado_producto=True)
+    config_logo = ConfiguracionLogo.objects.first()
     cantidad_carrito = carritos.count()
     # Recupera todos los productos del usuario autenticado
     productos = Producto.objects.filter(usuario=user_id)
@@ -298,7 +302,7 @@ def mis_materiales(request):
         productos = productos.filter(estado_producto=False)
 
 
-    return render(request, 'productos_usuario.html', {'user': user,'is_profile_page': True,'carritos': carritos,'misProductos': productos,'cantidad_carrito': cantidad_carrito})
+    return render(request, 'productos_usuario.html', {'user': user,'is_profile_page': True,'carritos': carritos,'misProductos': productos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo})
 
 def detalle_producto(request, producto_id):
     user_id = request.session.get('user_id')
@@ -320,6 +324,7 @@ def detalle_producto(request, producto_id):
 
 
     carritos = CarritoProducto.objects.filter(usuario=user_id,producto__estado_producto=True)
+    config_logo = ConfiguracionLogo.objects.first()
     cantidad_carrito = carritos.count()
 
     #producto = get_object_or_404(Producto, id=producto_id)
@@ -368,6 +373,7 @@ def detalle_producto(request, producto_id):
         'provincias': provincias,
         'estados': estados,
         'cantidad_carrito': cantidad_carrito,
+        'config_logo': config_logo,
         #'imagenes': producto.imagenes.all(),
     })
 def eliminar_imagenes(request):
