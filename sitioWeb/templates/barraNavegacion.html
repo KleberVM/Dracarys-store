@@ -36,6 +36,8 @@
                     {% else %}
                         <p>No hay productos en el carrito.</p>
                     {% endif %}
+                    <!-- Botón "Comprar" -->
+                    <a href="{% url 'transaccion' %}" class="btn-buy">Comprar</a>
                 </div>
             {% endif %}
         </div>        
