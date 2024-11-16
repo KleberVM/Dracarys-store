@@ -17,54 +17,63 @@ document.addEventListener("DOMContentLoaded", function () {
       background: "#f4f4f4",
     },
     "Imagen 2": {
-      primary: "#8BADC0", // Azul grisáceo suave
-      secondary: "#F2D1A0", // Amarillo pálido
-      tertiary: "#F5A8B5", // Rosa claro cálido
-      text: "#4A4A4A", // Texto gris oscuro
-      background: "#F9F9F9", // Fondo gris muy claro
+      primary: "#8BADC0", 
+      secondary: "#F2D1A0",
+      tertiary: "#F5A8B5", 
+      text: "#4A4A4A", 
+      background: "#F9F9F9", 
     },
     "Imagen 3": {
-      primary: "#2F4858", // Azul grisáceo oscuro
-      secondary: "#E8A598", // Salmón claro
-      tertiary: "#A2D5C6", // Verde agua
-      text: "#333333", // Texto gris oscuro
-      background: "#F6F7F7", // Fondo gris claro
+      primary: "#2F4858", 
+      secondary: "#E8A598", 
+      tertiary: "#A2D5C6", 
+      text: "#333333", 
+      background: "#F6F7F7", 
     },
     "Imagen 4": {
-      primary: "#3D5A80", // Azul profundo
-      secondary: "#98C7E6", // Azul claro
-      tertiary: "#EE6C4D", // Coral suave
-      text: "#333", // Texto oscuro
-      background: "#D9EAF7", // Fondo azul muy claro
+      primary: "#3D5A80", 
+      secondary: "#98C7E6", 
+      tertiary: "#EE6C4D", 
+      text: "#333", 
+      background: "#D9EAF7", 
     },
     "Imagen 5": {
-      primary: "#F5B3A4", // Naranja coral suave
-      secondary: "#A3C9D7", // Azul suave pastel
-      tertiary: "#D4B89A", // Beige suave cálido
-      text: "#4D4D4D", // Texto gris oscuro suave
-      background: "#F5F5F5", // Fondo gris muy claro
+      primary: "#F5B3A4", 
+      secondary: "#A3C9D7", 
+      tertiary: "#D4B89A", 
+      text: "#4D4D4D", 
+      background: "#F5F5F5", 
     },
     "Imagen 6": {
-      primary: "#D5A6BD", // Rosa claro suave
-      secondary: "#A2B9D6", // Azul grisáceo suave
-      tertiary: "#F1D0A2", // Amarillo cálido pálido
-      text: "#4A4A4A", // Texto gris oscuro suave
-      background: "#F7F4F1", // Fondo crema suave
+      primary: "#D5A6BD", 
+      secondary: "#A2B9D6", 
+      tertiary: "#F1D0A2", 
+      text: "#4A4A4A", 
+      background: "#F7F4F1", 
     },
     "Imagen 7": {
-      primary: "#B1D8A9", // Verde menta suave
-      secondary: "#D8E4D3", // Verde claro pálido
-      tertiary: "#F1C4B0", // Rosa suave
-      text: "#3E3E3E", // Texto gris oscuro suave
-      background: "#F9F9F9", // Fondo gris muy claro
+      primary: "#B1D8A9", 
+      secondary: "#D8E4D3", 
+      tertiary: "#F1C4B0", 
+      text: "#3E3E3E", 
+      background: "#F9F9F9", 
     },
     "Imagen 8": {
-      primary: "#F5A97F", // Naranja suave
-      secondary: "#A3D2D3", // Azul claro pastel
-      tertiary: "#E1C1A6", // Beige cálido
-      text: "#4B4B4B", // Texto gris oscuro suave
-      background: "#F7F7F7", // Fondo gris muy claro
+      primary: "#F5A97F", 
+      secondary: "#A3D2D3", 
+      tertiary: "#E1C1A6", 
+      text: "#4B4B4B", 
+      background: "#F7F7F7", 
     },
+  };
+
+  // Variables para almacenar los colores seleccionados
+  let selectedColors = {
+    primary: '',
+    secondary: '',
+    tertiary: '',
+    text: '',
+    background: '',
   };
 
   // Abre el modal al hacer clic en el enlace
@@ -101,7 +110,18 @@ document.addEventListener("DOMContentLoaded", function () {
       // Cambiar colores según la imagen seleccionada
       const theme = colorThemes[image.alt];
       if (theme) {
+        // Almacenar los colores seleccionados en la variable selectedColors
+        selectedColors.primary = theme.primary;
+        selectedColors.secondary = theme.secondary;
+        selectedColors.tertiary = theme.tertiary;
+        selectedColors.text = theme.text;
+        selectedColors.background = theme.background;
+
+        // Actualiza la interfaz con los nuevos colores
         changeColors(theme);
+
+        // Mostrar los valores de selectedColors en la consola
+        console.log('Colores seleccionados:', selectedColors);
       }
     });
   });
@@ -120,13 +140,17 @@ document.addEventListener("DOMContentLoaded", function () {
       "--tertiary-color",
       theme.tertiary
     );
-    document.documentElement.style.setProperty("--text-color", theme.text);
+    document.documentElement.style.setProperty(
+      "--text-color",
+       theme.text
+      );
     document.documentElement.style.setProperty(
       "--background-color",
       theme.background
     );
   }
 });
+
 
 
 
