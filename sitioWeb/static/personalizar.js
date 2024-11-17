@@ -12,62 +12,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Colores agradables para cada imagen
   const colorThemes = {
-    "Imagen 1": {
-      primary: "#02735E",
-      secondary: "#014040",
-      tertiary: "#F27405",
-      text: "#333",
-      background: "#f4f4f4",
-    },
-    "Imagen 2": {
-      primary: "#8BADC0", 
-      secondary: "#F2D1A0",
-      tertiary: "#F5A8B5", 
-      text: "#4A4A4A", 
-      background: "#F9F9F9", 
-    },
-    "Imagen 3": {
-      primary: "#2F4858", 
-      secondary: "#E8A598", 
-      tertiary: "#A2D5C6", 
-      text: "#333333", 
-      background: "#F6F7F7", 
-    },
-    "Imagen 4": {
-      primary: "#3D5A80", 
-      secondary: "#98C7E6", 
-      tertiary: "#EE6C4D", 
-      text: "#333", 
-      background: "#D9EAF7", 
-    },
-    "Imagen 5": {
-      primary: "#F5B3A4", 
-      secondary: "#A3C9D7", 
-      tertiary: "#D4B89A", 
-      text: "#4D4D4D", 
-      background: "#F5F5F5", 
-    },
-    "Imagen 6": {
-      primary: "#D5A6BD", 
-      secondary: "#A2B9D6", 
-      tertiary: "#F1D0A2", 
-      text: "#4A4A4A", 
-      background: "#F7F4F1", 
-    },
-    "Imagen 7": {
-      primary: "#B1D8A9", 
-      secondary: "#D8E4D3", 
-      tertiary: "#F1C4B0", 
-      text: "#3E3E3E", 
-      background: "#F9F9F9", 
-    },
-    "Imagen 8": {
-      primary: "#F5A97F", 
-      secondary: "#A3D2D3", 
-      tertiary: "#E1C1A6", 
-      text: "#4B4B4B", 
-      background: "#F7F7F7", 
-    },
+    "Imagen 1": { primary: "#02735E", secondary: "#014040", tertiary: "#F27405", text: "#333", background: "#f4f4f4" },
+    "Imagen 2": { primary: "#8BADC0", secondary: "#F2D1A0", tertiary: "#F5A8B5", text: "#4A4A4A", background: "#F9F9F9" },
+    "Imagen 3": { primary: "#2F4858", secondary: "#E8A598", tertiary: "#A2D5C6", text: "#333333", background: "#F6F7F7" },
+    "Imagen 4": { primary: "#3D5A80", secondary: "#98C7E6", tertiary: "#EE6C4D", text: "#333", background: "#D9EAF7" },
+    "Imagen 5": { primary: "#F5B3A4", secondary: "#A3C9D7", tertiary: "#D4B89A", text: "#4D4D4D", background: "#F5F5F5" },
+    "Imagen 6": { primary: "#D5A6BD", secondary: "#A2B9D6", tertiary: "#F1D0A2", text: "#4A4A4A", background: "#F7F4F1" },
+    "Imagen 7": { primary: "#B1D8A9", secondary: "#D8E4D3", tertiary: "#F1C4B0", text: "#3E3E3E", background: "#F9F9F9" },
+    "Imagen 8": { primary: "#F5A97F", secondary: "#A3D2D3", tertiary: "#E1C1A6", text: "#4B4B4B", background: "#F7F7F7" }
   };
 
   // Variables para almacenar los colores seleccionados
@@ -120,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Actualiza la interfaz con los nuevos colores
         changeColors(theme);
+        saveColorSettings(userId, primary, secondary, tertiary, text, background);
 
         // Mostrar los valores de las variables de color en la consola
         console.log('Colores seleccionados:');
@@ -134,25 +87,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Función para cambiar los colores en :root
   function changeColors(theme) {
-    document.documentElement.style.setProperty(
-      "--primary-color",
-      theme.primary
-    );
-    document.documentElement.style.setProperty(
-      "--secondary-color",
-      theme.secondary
-    );
-    document.documentElement.style.setProperty(
-      "--tertiary-color",
-      theme.tertiary
-    );
-    document.documentElement.style.setProperty(
-      "--text-color",
-      theme.text
-    );
-    document.documentElement.style.setProperty(
-      "--background-color",
-      theme.background
-    );
+    document.documentElement.style.setProperty("--primary-color", theme.primary);
+    document.documentElement.style.setProperty("--secondary-color", theme.secondary);
+    document.documentElement.style.setProperty("--tertiary-color", theme.tertiary);
+    document.documentElement.style.setProperty("--text-color", theme.text);
+    document.documentElement.style.setProperty("--background-color", theme.background);
   }
 });
