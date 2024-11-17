@@ -434,3 +434,35 @@ def eliminar_productos(request):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     return JsonResponse({'error': 'Método no permitido.'}, status=405)
+
+
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import PersonalizarColores
+
+@csrf_exempt
+def guardar_colores(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        user_id = data.get('user_id')
+        primary = data.get('primary')
+        secondary = data.get('secondary')
+        tertiary = data.get('tertiary')
+        text = data.get('text')
+        background = data.get('background')
+
+        # Crear o actualizar la personalización de colores del usuario
+        personalizar_colores, created = PersonalizarColores.objects.update_or_create(
+            usuario_id=user_id,
+            defaults={
+                'primario': primary,
+                'secundario': secondary,
+                'terciario': tertiary,
+                'texto': text,
+                'fondo': background
+            }
+        )
+        return JsonResponse({'status': 'success', 'message': 'Colores guardados correctamente'})
+
+    return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)

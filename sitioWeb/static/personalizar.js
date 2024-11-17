@@ -93,4 +93,44 @@ document.addEventListener("DOMContentLoaded", function () {
     document.documentElement.style.setProperty("--text-color", theme.text);
     document.documentElement.style.setProperty("--background-color", theme.background);
   }
+  function saveColorSettings(userId, primary, secondary, tertiary, text, background) {
+    fetch('/guardar-colores/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken')
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        primary: primary,
+        secondary: secondary,
+        tertiary: tertiary,
+        text: text,
+        background: background
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Colores guardados correctamente:', data);
+    })
+    .catch(error => {
+      console.error('Error al guardar los colores:', error);
+    });
+  }
+
+  // Función para obtener el token CSRF de las cookies
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
 });
