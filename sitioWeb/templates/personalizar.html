@@ -2,7 +2,11 @@
 <div id="ventana-Estilos" class="ventana-estilos-modal">
     <div class="ventana-estilos-content">
         <span class="ventana-estilos-close">&times;</span>
-        <h2>Elije un Tema</h2>
+        <h2>Elige un Tema</h2>
+
+        <!-- Usar un elemento HTML para almacenar el valor -->
+        <div id="user-id" data-user-id="{{ user_id }}"></div>
+
         <div class="ventana-estilos-image-container">
             <div class="image-item">
                 <img src="{% static 'temas/1.png' %}" alt="Imagen 1" class="selectable-image">

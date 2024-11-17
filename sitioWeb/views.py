@@ -130,7 +130,7 @@ def perfil_view(request):
             
         user.save()  # Guarda los cambios en la base de datos
 
-    return render(request, 'perfil.html', {'user': user,'is_profile_page': True,'carritos': carritos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo})
+    return render(request, 'perfil.html', {"user_id":user_id,'user': user,'is_profile_page': True,'carritos': carritos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo})
 
 def logout_request(request):
     logout(request)

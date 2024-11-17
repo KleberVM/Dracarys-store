@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Obtener el valor de user_id desde el atributo data-user-id
+  var userId = document.getElementById("user-id").getAttribute("data-user-id");
+  console.log("User ID: ", userId); // Ver en la consola para asegurarse de que se guardó correctamente
   const modal = document.getElementById("ventana-Estilos");
   const openModal = document.getElementById("openVentanaEstilos");
   const closeModal = modal.querySelector(".ventana-estilos-close");
