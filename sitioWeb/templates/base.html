@@ -35,13 +35,14 @@
         {% endif %}
 
 
-    {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-                <div class="alert {{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        </div>
-    {% endif %}
+        <div id="colorData"
+        data-primary="{{ temitas.primario }}"
+        data-secondary="{{ temitas.secundario }}"
+        data-tertiary="{{ temitas.terciario }}"
+        data-text="{{ temitas.texto }}"
+        data-background="{{ temitas.fondo }}">
+   </div>
+   
 
     <!-- Navbar -->
     <header>
@@ -58,7 +59,8 @@
     <!-- Contenido principal -->
 
 
-    <main>        
+    <main>
+        
         <!--aqui va el contenido -->
         {% block contenidos %}
         <!-- Contenido por defecto (para otras páginas) -->
@@ -88,5 +90,6 @@
     <script src= "{% static 'carritoDesplegable.js' %}"></script>
     <script src= "{% static 'detalle_producto.js' %}"></script>
     <script src= "{% static 'productosUsuario.js' %}"></script>
+    <script src= "{% static 'Temas_en_BASE.js' %}"></script>
 </body>
 </html>
