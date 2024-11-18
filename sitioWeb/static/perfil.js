@@ -152,6 +152,8 @@ document.getElementById('guardar-celular').addEventListener('click', function() 
 //-----------fin modal
 
 
+
+//------------------------------------------------------------------------BILLETERA----------------------------------------------------------------------
 // Función para mostrar y ocultar el saldo
 // Función para mostrar y ocultar el saldo con cambio de imagen y texto
 function toggleSaldo() {
@@ -190,29 +192,56 @@ function actualizarSaldo(event, tipo) {
     const saldoElement = document.getElementById('saldo');
     let saldoActual = parseFloat(saldoElement.innerText);
 
-    // Obtener el monto ingresado según el tipo de operación
-    const monto = tipo === 'deposito' 
-        ? parseFloat(document.getElementById('monto_deposito').value) 
+    // Obtener el monto ingresado dependiendo del tipo de operación
+    const monto = tipo === 'deposito'
+        ? parseFloat(document.getElementById('monto_deposito').value)
         : parseFloat(document.getElementById('monto_retiro').value);
 
-    // Realizar la operación y actualizar el saldo
-    if (tipo === 'deposito' && monto > 0) {
-        saldoActual += monto;
-    } else if (tipo === 'retiro' && monto > 0 && saldoActual >= monto) {
-        saldoActual -= monto;
-    } else {
-        alert('Monto no válido o saldo insuficiente');
+    // Validar si el monto es un número válido y mayor a 0
+    if (isNaN(monto) || monto <= 0) {
+        Swal.fire({
+            icon: 'error',
+            title: tipo === 'deposito' ? 'Error al depositar' : 'Error al retirar',
+            text: 'Por favor ingresa un monto positivo mayor a 0.',
+        });
         return;
     }
 
-    // Actualizar el saldo en el HTML
+    // Operación de depósito
+    if (tipo === 'deposito') {
+        saldoActual += monto;
+    } 
+    // Operación de retiro
+    else if (tipo === 'retiro') {
+        if (saldoActual >= monto) {
+            saldoActual -= monto;
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Saldo insuficiente',
+                text: 'No puedes retirar un monto mayor al saldo disponible.',
+            });
+            return;
+        }
+    }
+
+    // Actualizar el saldo en la página
     saldoElement.innerText = saldoActual.toFixed(2);
 
-    // Ocultar el formulario y limpiar el valor del input
-    document.getElementById(tipo + '-input').style.display = 'none';
+    // Ocultar el formulario correspondiente y limpiar el campo de entrada
+    const formId = tipo === 'deposito' ? 'deposito-input' : 'retiro-input';
+    document.getElementById(formId).style.display = 'none';
     if (tipo === 'deposito') {
         document.getElementById('monto_deposito').value = '';
     } else {
         document.getElementById('monto_retiro').value = '';
     }
+
+    // Confirmación de éxito
+    Swal.fire({
+        icon: 'success',
+        title: tipo === 'deposito' ? 'Depósito exitoso' : 'Retiro exitoso',
+        text: `El saldo ha sido ${tipo === 'deposito' ? 'incrementado' : 'reducido'} correctamente.`,
+    });
 }
+
