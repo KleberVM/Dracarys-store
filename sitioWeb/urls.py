@@ -45,7 +45,7 @@ urlpatterns = [
     path('perfil/mis-materiales/eliminar/', eliminar_productos, name='eliminar_productos'),
     path('billetera/', billetera_view, name='billetera'),
     path('transaccion/', transaccion_view, name='transaccion'),
-        path('guardar-colores/', guardar_colores, name='guardar_colores'),
+    path('guardar-colores/', guardar_colores, name='guardar_colores'),
 
     
 ]
