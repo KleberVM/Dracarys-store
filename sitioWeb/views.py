@@ -12,6 +12,9 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 
+from .models import PersonalizarColores
+from .models import Usuario, PersonalizarColores
+
 
 
 # Create your views here.
@@ -301,6 +304,7 @@ def mis_materiales(request):
     cantidad_carrito = carritos.count()
     # Recupera todos los productos del usuario autenticado
     productos = Producto.objects.filter(usuario=user_id)
+    colores_personalizados = PersonalizarColores.objects.filter(usuario_id=user_id).first()
 
     # Filtra los productos si se selecciona una opción en el filtro
     filtro = request.GET.get('filtro')
@@ -310,7 +314,7 @@ def mis_materiales(request):
         productos = productos.filter(estado_producto=False)
 
 
-    return render(request, 'productos_usuario.html', {'user': user,'is_profile_page': True,'carritos': carritos,'misProductos': productos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo})
+    return render(request, 'productos_usuario.html', {'user': user,'is_profile_page': True,'carritos': carritos,'misProductos': productos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo,'temitas':colores_personalizados})
 
 def detalle_producto(request, producto_id):
     user_id = request.session.get('user_id')
@@ -319,6 +323,7 @@ def detalle_producto(request, producto_id):
         return redirect('login')
     
     user = get_object_or_404(Usuario, idUsuario=user_id)
+    
     
     # Obtener el producto y verificar que pertenece al usuario autenticado
     producto = get_object_or_404(Producto, id=producto_id)
@@ -334,6 +339,8 @@ def detalle_producto(request, producto_id):
     carritos = CarritoProducto.objects.filter(usuario=user_id,producto__estado_producto=True)
     config_logo = ConfiguracionLogo.objects.first()
     cantidad_carrito = carritos.count()
+    
+    colores_personalizados = PersonalizarColores.objects.filter(usuario_id=user_id).first()
 
     #producto = get_object_or_404(Producto, id=producto_id)
     categorias = Categoria.objects.all()  # Traer todas las categorías
@@ -382,6 +389,7 @@ def detalle_producto(request, producto_id):
         'estados': estados,
         'cantidad_carrito': cantidad_carrito,
         'config_logo': config_logo,
+        'temitas':colores_personalizados,
         #'imagenes': producto.imagenes.all(),
     })
 def eliminar_imagenes(request):
@@ -478,9 +486,6 @@ def guardar_colores(request):
 
 
 
-from django.shortcuts import render, get_object_or_404
-from .models import PersonalizarColores
-
 def obtener_colores_usuario(request, user_id):
     # Obtener la personalización de colores del usuario
     personalizacion = get_object_or_404(PersonalizarColores, usuario_id=user_id)
@@ -502,14 +507,6 @@ def obtener_colores_usuario(request, user_id):
     })
 
 
-
-
-
-
-
-
-from django.shortcuts import render, redirect
-from .models import Usuario, PersonalizarColores
 
 def obtener_colores(request):
     # Obtén el user_id desde la sesión
