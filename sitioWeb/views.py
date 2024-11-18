@@ -19,6 +19,7 @@ def baseView(request):
     '''Esto es la página principal'''
         
     user_id = request.session.get('user_id')
+    print(user_id)
     user = None
     if user_id:
         user = Usuario.objects.get(idUsuario=user_id)
@@ -28,14 +29,16 @@ def baseView(request):
     carritos = CarritoProducto.objects.filter(usuario=user,producto__estado_producto=True)
     cantidad_carrito = carritos.count()  # Calcula la cantidad de productos en el carrito
     config_logo = ConfiguracionLogo.objects.first()  # Obtiene el primer registro del logo
-
+    colores_personalizados = PersonalizarColores.objects.filter(usuario_id=user_id).first()
+    
     return render(request, "base.html", {
         'user': user,
         'productos': productos,
         'categorias': categorias,
         'carritos': carritos,
         'cantidad_carrito': cantidad_carrito,  # Añade el contador al contexto
-        'config_logo': config_logo
+        'config_logo': config_logo,
+        'temitas': colores_personalizados
     })
 
 def login_view(request):
@@ -466,3 +469,55 @@ def guardar_colores(request):
         return JsonResponse({'status': 'success', 'message': 'Colores guardados correctamente'})
 
     return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
+
+
+
+
+from django.shortcuts import render, get_object_or_404
+from .models import PersonalizarColores
+
+def obtener_colores_usuario(request, user_id):
+    # Obtener la personalización de colores del usuario
+    personalizacion = get_object_or_404(PersonalizarColores, usuario_id=user_id)
+    
+    # Asignar los valores de cada campo a variables independientes
+    primario = personalizacion.primario
+    secundario = personalizacion.secundario
+    terciario = personalizacion.terciario
+    texto = personalizacion.texto
+    fondo = personalizacion.fondo
+    
+    # Pasar los valores al contexto de la plantilla o usarlos en la lógica
+    return render(request, 'personalizar.html', {
+        'primario': primario,
+        'secundario': secundario,
+        'terciario': terciario,
+        'texto': texto,
+        'fondo': fondo,
+    })
+
+
+
+
+
+
+
+
+from django.shortcuts import render, redirect
+from .models import Usuario, PersonalizarColores
+
+def obtener_colores(request):
+    # Obtén el user_id desde la sesión
+    user_id = request.session.get('user_id')
+    
+    if not user_id:
+        return redirect('login')  # Redirigir al login si no está autenticado
+    
+    # Obtener el usuario usando el user_id
+    user = Usuario.objects.get(idUsuario=user_id)
+    
+    # Obtener solo el ID de los registros de PersonalizarColores asociados al usuario
+    personalizar_colores = PersonalizarColores.objects.filter(usuario=user).values('id')
+    
+    # Puedes pasar estos IDs a la plantilla, si es necesario
+    return render(request, 'colores.html', {"user_id": user_id, 'user': user, 'personalizar_colores': personalizar_colores})
