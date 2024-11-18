@@ -32,16 +32,7 @@
                     </div>
                 {% endfor %}
             </div>
-        {% endif %}
-
-
-        <div id="colorData"
-        data-primary="{{ temitas.primario }}"
-        data-secondary="{{ temitas.secundario }}"
-        data-tertiary="{{ temitas.terciario }}"
-        data-text="{{ temitas.texto }}"
-        data-background="{{ temitas.fondo }}">
-   </div>
+        {% endif %}      
    
 
     <!-- Navbar -->
@@ -60,6 +51,14 @@
 
 
     <main>
+        <div id="colorData"
+            data-primary="{{ temitas.primario }}"
+            data-secondary="{{ temitas.secundario }}"
+            data-tertiary="{{ temitas.terciario }}"
+            data-text="{{ temitas.texto }}"
+            data-background="{{ temitas.fondo }}">
+        </div>     
+       
         
         <!--aqui va el contenido -->
         {% block contenidos %}
@@ -91,5 +90,7 @@
     <script src= "{% static 'detalle_producto.js' %}"></script>
     <script src= "{% static 'productosUsuario.js' %}"></script>
     <script src= "{% static 'Temas_en_BASE.js' %}"></script>
+    <script src= "{% static 'auto_Cargar_Tema.js' %}"></script>
+    
 </body>
 </html>

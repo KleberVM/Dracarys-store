@@ -1,17 +1,3 @@
-// document.addEventListener("DOMContentLoaded", function () {
-//     const temasElement = document.getElementById("temas");
-
-//     const temitas = {
-//         primario: temasElement.getAttribute("data-primario"),
-//         secundario: temasElement.getAttribute("data-secundario"),
-//         terciario: temasElement.getAttribute("data-terciario"),
-//         texto: temasElement.getAttribute("data-texto"),
-//         fondo: temasElement.getAttribute("data-fondo")
-//     };
-
-//     console.log(temitas);  
-// });
-
 
 document.addEventListener("DOMContentLoaded", function () {
     const colorData = document.getElementById("colorData");
@@ -24,11 +10,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const backgroundColor = colorData.getAttribute("data-background");
 
     // Imprimir los valores en la consola
-    console.log("Primary Color:", primaryColor);
-    console.log("Secondary Color:", secondaryColor);
-    console.log("Tertiary Color:", tertiaryColor);
-    console.log("Text Color:", textColor);
-    console.log("Background Color:", backgroundColor);
+    console.log("Primary Color dede BASE:", primaryColor);
+    console.log("Secondary Color dede BASE:", secondaryColor);
+    console.log("Tertiary Color dede BASE:", tertiaryColor);
+    console.log("Text Color dede BASE:", textColor);
+    console.log("Background Color dede BASE:", backgroundColor);
 
     // Aplicar estos valores como variables CSS en :root
     document.documentElement.style.setProperty("--primary-color", primaryColor);
@@ -37,3 +23,5 @@ document.addEventListener("DOMContentLoaded", function () {
     document.documentElement.style.setProperty("--text-color", textColor);
     document.documentElement.style.setProperty("--background-color", backgroundColor);
 });
+
+

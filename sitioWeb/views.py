@@ -113,6 +113,7 @@ def perfil_view(request):
     carritos = CarritoProducto.objects.filter(usuario=user,producto__estado_producto=True)
     cantidad_carrito = carritos.count()
     config_logo = ConfiguracionLogo.objects.first()
+    colores_personalizados = PersonalizarColores.objects.filter(usuario_id=user_id).first()
 
     if request.method == 'POST':
         # Si hay un archivo de imagen en la solicitud
@@ -133,7 +134,7 @@ def perfil_view(request):
             
         user.save()  # Guarda los cambios en la base de datos
 
-    return render(request, 'perfil.html', {"user_id":user_id,'user': user,'is_profile_page': True,'carritos': carritos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo})
+    return render(request, 'perfil.html', {"user_id":user_id,'user': user,'is_profile_page': True,'carritos': carritos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo, "masTemas":colores_personalizados})
 
 def logout_request(request):
     logout(request)
@@ -233,12 +234,16 @@ def ofertarMView(request):
     user_id = request.session.get('user_id')
     carritos = CarritoProducto.objects.filter(usuario=user_id,producto__estado_producto=True)
     config_logo = ConfiguracionLogo.objects.first()
+    
+    
+    
     # Si no hay usuario en sesión, redirigir al login
     if not user_id:
         return redirect('login')
     # Obtener el usuario o lanzar un 404 si no existe
     user = get_object_or_404(Usuario, idUsuario=user_id)
     cantidad_carrito = carritos.count()
+    colores_personalizados = PersonalizarColores.objects.filter(usuario_id=user_id).first()
 
     if request.method == 'POST':
         # Obtener los datos del formulario
@@ -282,7 +287,7 @@ def ofertarMView(request):
         return redirect('base')
 
     # Si la solicitud es GET, renderizar el formulario con el usuario
-    return render(request, 'ofertar.html', {'user': user,'is_profile_page': True,'carritos': carritos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo})
+    return render(request, 'ofertar.html', {'user': user,'is_profile_page': True,'carritos': carritos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo,'temitas':colores_personalizados})
 
 
 def mis_materiales(request):
