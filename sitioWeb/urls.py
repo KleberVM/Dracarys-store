@@ -21,6 +21,7 @@ from .views import(
     eliminar_imagenes,
     billetera_view,
     transaccion_view,
+    guardar_colores
 ) # Asegúrate de importar tu vista
 from django.contrib.auth import views as auth_views
 
@@ -44,6 +45,8 @@ urlpatterns = [
     path('perfil/mis-materiales/eliminar/', eliminar_productos, name='eliminar_productos'),
     path('billetera/', billetera_view, name='billetera'),
     path('transaccion/', transaccion_view, name='transaccion'),
+        path('guardar-colores/', guardar_colores, name='guardar_colores'),
+
     
 ]
 if settings.DEBUG:

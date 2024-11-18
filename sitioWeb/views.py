@@ -158,6 +158,9 @@ def transaccion_view(request):
         'is_profile_page': True
     })
 
+from .models import PersonalizarColores
+from .models import Usuario, PersonalizarColores
+
 
 
 # Create your views here.
@@ -165,6 +168,7 @@ def baseView(request):
     '''Esto es la página principal'''
         
     user_id = request.session.get('user_id')
+    print(user_id)
     user = None
     if user_id:
         user = Usuario.objects.get(idUsuario=user_id)
@@ -174,14 +178,16 @@ def baseView(request):
     carritos = CarritoProducto.objects.filter(usuario=user,producto__estado_producto=True)
     cantidad_carrito = carritos.count()  # Calcula la cantidad de productos en el carrito
     config_logo = ConfiguracionLogo.objects.first()  # Obtiene el primer registro del logo
-
+    colores_personalizados = PersonalizarColores.objects.filter(usuario_id=user_id).first()
+    
     return render(request, "base.html", {
         'user': user,
         'productos': productos,
         'categorias': categorias,
         'carritos': carritos,
         'cantidad_carrito': cantidad_carrito,  # Añade el contador al contexto
-        'config_logo': config_logo
+        'config_logo': config_logo,
+        'temitas': colores_personalizados
     })
 
 def login_view(request):
@@ -256,6 +262,7 @@ def perfil_view(request):
     carritos = CarritoProducto.objects.filter(usuario=user,producto__estado_producto=True)
     cantidad_carrito = carritos.count()
     config_logo = ConfiguracionLogo.objects.first()
+    colores_personalizados = PersonalizarColores.objects.filter(usuario_id=user_id).first()
 
     if request.method == 'POST':
         # Si hay un archivo de imagen en la solicitud
@@ -276,7 +283,7 @@ def perfil_view(request):
             
         user.save()  # Guarda los cambios en la base de datos
 
-    return render(request, 'perfil.html', {'user': user,'is_profile_page': True,'carritos': carritos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo})
+    return render(request, 'perfil.html', {"user_id":user_id,'user': user,'is_profile_page': True,'carritos': carritos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo, "masTemas":colores_personalizados})
 
 def logout_request(request):
     logout(request)
@@ -376,12 +383,16 @@ def ofertarMView(request):
     user_id = request.session.get('user_id')
     carritos = CarritoProducto.objects.filter(usuario=user_id,producto__estado_producto=True)
     config_logo = ConfiguracionLogo.objects.first()
+    
+    
+    
     # Si no hay usuario en sesión, redirigir al login
     if not user_id:
         return redirect('login')
     # Obtener el usuario o lanzar un 404 si no existe
     user = get_object_or_404(Usuario, idUsuario=user_id)
     cantidad_carrito = carritos.count()
+    colores_personalizados = PersonalizarColores.objects.filter(usuario_id=user_id).first()
 
     if request.method == 'POST':
         # Obtener los datos del formulario
@@ -425,7 +436,7 @@ def ofertarMView(request):
         return redirect('base')
 
     # Si la solicitud es GET, renderizar el formulario con el usuario
-    return render(request, 'ofertar.html', {'user': user,'is_profile_page': True,'carritos': carritos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo})
+    return render(request, 'ofertar.html', {'user': user,'is_profile_page': True,'carritos': carritos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo,'temitas':colores_personalizados})
 
 
 def mis_materiales(request):
@@ -439,6 +450,7 @@ def mis_materiales(request):
     cantidad_carrito = carritos.count()
     # Recupera todos los productos del usuario autenticado
     productos = Producto.objects.filter(usuario=user_id)
+    colores_personalizados = PersonalizarColores.objects.filter(usuario_id=user_id).first()
 
     # Filtra los productos si se selecciona una opción en el filtro
     filtro = request.GET.get('filtro')
@@ -448,7 +460,7 @@ def mis_materiales(request):
         productos = productos.filter(estado_producto=False)
 
 
-    return render(request, 'productos_usuario.html', {'user': user,'is_profile_page': True,'carritos': carritos,'misProductos': productos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo})
+    return render(request, 'productos_usuario.html', {'user': user,'is_profile_page': True,'carritos': carritos,'misProductos': productos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo,'temitas':colores_personalizados})
 
 def detalle_producto(request, producto_id):
     user_id = request.session.get('user_id')
@@ -457,6 +469,7 @@ def detalle_producto(request, producto_id):
         return redirect('login')
     
     user = get_object_or_404(Usuario, idUsuario=user_id)
+    
     
     # Obtener el producto y verificar que pertenece al usuario autenticado
     producto = get_object_or_404(Producto, id=producto_id)
@@ -472,6 +485,8 @@ def detalle_producto(request, producto_id):
     carritos = CarritoProducto.objects.filter(usuario=user_id,producto__estado_producto=True)
     config_logo = ConfiguracionLogo.objects.first()
     cantidad_carrito = carritos.count()
+    
+    colores_personalizados = PersonalizarColores.objects.filter(usuario_id=user_id).first()
 
     #producto = get_object_or_404(Producto, id=producto_id)
     categorias = Categoria.objects.all()  # Traer todas las categorías
@@ -520,6 +535,7 @@ def detalle_producto(request, producto_id):
         'estados': estados,
         'cantidad_carrito': cantidad_carrito,
         'config_logo': config_logo,
+        'temitas':colores_personalizados,
         #'imagenes': producto.imagenes.all(),
     })
 def eliminar_imagenes(request):
@@ -580,3 +596,76 @@ def eliminar_productos(request):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     return JsonResponse({'error': 'Método no permitido.'}, status=405)
+
+
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import PersonalizarColores
+
+@csrf_exempt
+def guardar_colores(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        user_id = data.get('user_id')
+        primary = data.get('primary')
+        secondary = data.get('secondary')
+        tertiary = data.get('tertiary')
+        text = data.get('text')
+        background = data.get('background')
+
+        # Crear o actualizar la personalización de colores del usuario
+        personalizar_colores, created = PersonalizarColores.objects.update_or_create(
+            usuario_id=user_id,
+            defaults={
+                'primario': primary,
+                'secundario': secondary,
+                'terciario': tertiary,
+                'texto': text,
+                'fondo': background
+            }
+        )
+        return JsonResponse({'status': 'success', 'message': 'Colores guardados correctamente'})
+
+    return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
+
+
+
+
+def obtener_colores_usuario(request, user_id):
+    # Obtener la personalización de colores del usuario
+    personalizacion = get_object_or_404(PersonalizarColores, usuario_id=user_id)
+    
+    # Asignar los valores de cada campo a variables independientes
+    primario = personalizacion.primario
+    secundario = personalizacion.secundario
+    terciario = personalizacion.terciario
+    texto = personalizacion.texto
+    fondo = personalizacion.fondo
+    
+    # Pasar los valores al contexto de la plantilla o usarlos en la lógica
+    return render(request, 'personalizar.html', {
+        'primario': primario,
+        'secundario': secundario,
+        'terciario': terciario,
+        'texto': texto,
+        'fondo': fondo,
+    })
+
+
+
+def obtener_colores(request):
+    # Obtén el user_id desde la sesión
+    user_id = request.session.get('user_id')
+    
+    if not user_id:
+        return redirect('login')  # Redirigir al login si no está autenticado
+    
+    # Obtener el usuario usando el user_id
+    user = Usuario.objects.get(idUsuario=user_id)
+    
+    # Obtener solo el ID de los registros de PersonalizarColores asociados al usuario
+    personalizar_colores = PersonalizarColores.objects.filter(usuario=user).values('id')
+    
+    # Puedes pasar estos IDs a la plantilla, si es necesario
+    return render(request, 'colores.html', {"user_id": user_id, 'user': user, 'personalizar_colores': personalizar_colores})
