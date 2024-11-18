@@ -84,7 +84,7 @@ h1 {
     text-align: center;
     padding:0;
     border-radius: 5px;
-    background-color: #02735E;
+    background-color: var(--primary-color);
     box-shadow: 2px 2px 10px 1px rgb(136, 134, 134);
 }
 .accion:hover{
@@ -109,7 +109,7 @@ h1 {
     padding: 3%;
     border: none;
     width: 100%;
-    background: #09584a;
+    background: var(--secondary-color);
     color: white;
     font-size: 1rem;
     cursor: pointer;
@@ -120,7 +120,7 @@ h1 {
 }
 
 .accion-btn:hover {
-    background: #014040;
+    background: var(--secondary-color);
 }
 
 /* Estilos para los formularios de depósito y retiro */
@@ -150,7 +150,7 @@ h1 {
     padding: 10px;
     border: none;
     border-radius: 20px;
-    background: #02735E;
+    background: var(--primary-color);
     color: white;
     font-size: 1rem;
     cursor: pointer;
@@ -158,8 +158,8 @@ h1 {
 }
 
 .input-form button:hover {
-    background: #014040;
+    background: var(--secondary-color);
 }
 .input-form button:active{
-    background-color: #F27405;
+    background-color: var(--tertiary-color);
 }

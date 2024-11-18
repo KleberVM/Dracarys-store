@@ -6,6 +6,9 @@
     left:20%;
     padding:2%
 }
+.container-transaccion h1{
+    color:var(--primary-color)
+}
 .dropdown {
     position: relative;
     display: inline-block;

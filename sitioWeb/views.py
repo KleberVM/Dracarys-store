@@ -27,6 +27,7 @@ def billetera_view(request):
     usuario = get_object_or_404(Usuario, idUsuario=user_id)
     carritos = CarritoProducto.objects.filter(usuario=usuario, producto__estado_producto=True)
     cantidad_carrito = carritos.count()
+    colores_personalizados = PersonalizarColores.objects.filter(usuario_id=user_id).first()
 
     # Procesa las acciones de recargar, transferir y retirar saldo
     if request.method == 'POST':
@@ -73,7 +74,7 @@ def billetera_view(request):
                 messages.success(request, 'Retiro realizado exitosamente.')
 
     # Renderiza la página de billetera
-    return render(request, 'billetera.html', {'user': usuario, 'saldo': usuario.billetera, 'carritos': carritos, 'cantidad_carrito': cantidad_carrito, 'is_profile_page': True})
+    return render(request, 'billetera.html', {'user': usuario, 'saldo': usuario.billetera, 'carritos': carritos, 'cantidad_carrito': cantidad_carrito, 'is_profile_page': True, 'temitas':colores_personalizados})
 
 
 
@@ -89,6 +90,7 @@ def transaccion_view(request):
     usuario = get_object_or_404(Usuario, idUsuario=user_id)
     productos_en_carrito = CarritoProducto.objects.filter(usuario=usuario)
     cantidad_carrito = productos_en_carrito.count()
+    colores_personalizados = PersonalizarColores.objects.filter(usuario_id=user_id).first()
 
     # Verifica si el carrito está vacío
     if not productos_en_carrito.exists():
@@ -155,7 +157,8 @@ def transaccion_view(request):
         'total_comision': total_con_comision,
         'saldo': usuario.billetera,
         'cantidad_carrito': cantidad_carrito,
-        'is_profile_page': True
+        'is_profile_page': True,
+        'temitas':colores_personalizados
     })
 
 from .models import PersonalizarColores
