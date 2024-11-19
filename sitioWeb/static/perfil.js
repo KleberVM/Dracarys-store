@@ -150,3 +150,98 @@ document.getElementById('guardar-celular').addEventListener('click', function() 
     }
 });
 //-----------fin modal
+
+
+
+//------------------------------------------------------------------------BILLETERA----------------------------------------------------------------------
+// Función para mostrar y ocultar el saldo
+// Función para mostrar y ocultar el saldo con cambio de imagen y texto
+function toggleSaldo() {
+    const saldo = document.getElementById('saldo');
+    const toggleButton = document.getElementById('toggle-saldo');
+
+    // Cambiar la visibilidad del saldo
+    saldo.classList.toggle('oculto');
+
+    // Cambiar el texto y el icono dependiendo del estado
+    if (saldo.classList.contains('oculto')) {
+        // Si está oculto, mostrar "Mostrar" y el icono de ojo cerrado
+        toggleButton.innerHTML = '👁️‍🗨️ Mostrar';  // Icono de ojo cerrado con texto "Mostrar"
+    } else {
+        // Si está visible, mostrar "Ocultar" y el icono de ojo abierto
+        toggleButton.innerHTML = '👁️ Ocultar';  // Icono de ojo abierto con texto "Ocultar"
+    }
+}
+
+
+// Función para activar el campo de entrada correspondiente
+function activarInput(inputId) {
+    const depositoInput = document.getElementById('deposito-input');
+    const retiroInput = document.getElementById('retiro-input');
+
+    // Ocultar ambos formularios y luego mostrar el seleccionado
+    depositoInput.style.display = 'none';
+    retiroInput.style.display = 'none';
+
+    document.getElementById(inputId).style.display = 'flex';
+}
+
+// Función para actualizar el saldo según la acción (deposito o retiro)
+function actualizarSaldo(event, tipo) {
+    event.preventDefault();
+    const saldoElement = document.getElementById('saldo');
+    let saldoActual = parseFloat(saldoElement.innerText);
+
+    // Obtener el monto ingresado dependiendo del tipo de operación
+    const monto = tipo === 'deposito'
+        ? parseFloat(document.getElementById('monto_deposito').value)
+        : parseFloat(document.getElementById('monto_retiro').value);
+
+    // Validar si el monto es un número válido y mayor a 0
+    if (isNaN(monto) || monto <= 0) {
+        Swal.fire({
+            icon: 'error',
+            title: tipo === 'deposito' ? 'Error al depositar' : 'Error al retirar',
+            text: 'Por favor ingresa un monto positivo mayor a 0.',
+        });
+        return;
+    }
+
+    // Operación de depósito
+    if (tipo === 'deposito') {
+        saldoActual += monto;
+    } 
+    // Operación de retiro
+    else if (tipo === 'retiro') {
+        if (saldoActual >= monto) {
+            saldoActual -= monto;
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Saldo insuficiente',
+                text: 'No puedes retirar un monto mayor al saldo disponible.',
+            });
+            return;
+        }
+    }
+
+    // Actualizar el saldo en la página
+    saldoElement.innerText = saldoActual.toFixed(2);
+
+    // Ocultar el formulario correspondiente y limpiar el campo de entrada
+    const formId = tipo === 'deposito' ? 'deposito-input' : 'retiro-input';
+    document.getElementById(formId).style.display = 'none';
+    if (tipo === 'deposito') {
+        document.getElementById('monto_deposito').value = '';
+    } else {
+        document.getElementById('monto_retiro').value = '';
+    }
+
+    // Confirmación de éxito
+    Swal.fire({
+        icon: 'success',
+        title: tipo === 'deposito' ? 'Depósito exitoso' : 'Retiro exitoso',
+        text: `El saldo ha sido ${tipo === 'deposito' ? 'incrementado' : 'reducido'} correctamente.`,
+    });
+}
+
