@@ -166,7 +166,7 @@ body.jazzmin-login-page {
 
 /* Caja del formulario de inicio de sesión */
 .login-box {
-    width: 400px;
+    width: 500px;
     height: 500px;
     margin: auto;
     padding: 2em;
@@ -306,4 +306,15 @@ img {
 /*Color de letra del menu desplegagle de cuenta ADMIN*/
 .dropdown-header{
     color: white;
+}
+
+
+/*Nombre de la tienda en el login*/
+.login-box-msg{
+    padding: 2px;
+    color: var(--secondary-color);
+}
+/*Mensaje de error en el login*/
+.callout.callout-danger{
+    padding: 1px;
 }

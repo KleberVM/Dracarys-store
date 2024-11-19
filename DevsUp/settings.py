@@ -56,7 +56,7 @@ JAZZMIN_SETTINGS = {
 
     #para personalizar por ejmplo mi propio logo
     
-    "welcome_sign": "Bienvenido a la administración DRACARYS-Store",  # Texto de bienvenida
+    "welcome_sign": "Admin DRACARYS-Store",  # Texto de bienvenida
     "site_title": "Mi Admin",
     "site_header": "DRACARYS-Store",
     "site_brand": "Dracarys-Store",
