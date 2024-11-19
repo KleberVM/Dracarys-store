@@ -13,7 +13,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.db import transaction
 
-
+from django.shortcuts import redirect
+from django.contrib import messages
 from decimal import Decimal
 from decimal import Decimal, ROUND_HALF_UP
 
@@ -33,37 +34,30 @@ def billetera_view(request):
     if request.method == 'POST':
         accion = request.POST.get('accion')  # Obtén la acción del formulario
         
-        # Convierte el monto a Decimal
-        monto = Decimal(request.POST.get('monto_recarga') or request.POST.get('monto_transferencia') or request.POST.get('monto_retiro', 0))
+        try:
+            monto = Decimal(request.POST.get('monto_recarga') or request.POST.get('monto_transferencia') or request.POST.get('monto_retiro', 0))
+        except (TypeError, ValueError):
+            messages.error(request, "Monto inválido.")
+            return redirect('billetera')  # Redirige tras error
 
         if accion == 'recargar':
-            # Recarga saldo
             usuario.billetera += monto
             usuario.save()
             messages.success(request, 'Saldo recargado exitosamente.')
         elif accion == 'transferir':
             correo_destinatario = request.POST.get('correo_destinatario')
             destinatario = get_object_or_404(Usuario, correo=correo_destinatario)
-            
             if monto > usuario.billetera:
                 messages.error(request, 'Saldo insuficiente para transferir.')
             else:
-                # Comision para la cuenta ADMIN
                 comision = monto * Decimal(0.1)
-
-                # Descontar el monto del usuario
                 usuario.billetera -= monto
-                # Añadir el 90% al destinatario
                 destinatario.billetera += monto * Decimal(0.9)
-                # Añadir el 10% a la cuenta ADMIN
-                admin = get_object_or_404(Usuario, nombre='ADMIN')  # Asumiendo que el usuario ADMIN tiene el nombre 'ADMIN'
+                admin = get_object_or_404(Usuario, nombre='ADMIN')
                 admin.billetera += comision
-
-                # Guardar los cambios
                 usuario.save()
                 destinatario.save()
                 admin.save()
-
                 messages.success(request, 'Transferencia realizada con éxito, menos la comisión.')
         elif accion == 'retirar':
             if monto > usuario.billetera:
@@ -72,10 +66,18 @@ def billetera_view(request):
                 usuario.billetera -= monto
                 usuario.save()
                 messages.success(request, 'Retiro realizado exitosamente.')
+        
+        return redirect('billetera')  # Redirige después de manejar el POST
 
     # Renderiza la página de billetera
-    return render(request, 'billetera.html', {'user': usuario, 'saldo': usuario.billetera, 'carritos': carritos, 'cantidad_carrito': cantidad_carrito, 'is_profile_page': True, 'temitas':colores_personalizados})
-
+    return render(request, 'billetera.html', {
+        'user': usuario,
+        'saldo': usuario.billetera,
+        'carritos': carritos,
+        'cantidad_carrito': cantidad_carrito,
+        'is_profile_page': True,
+        'temitas': colores_personalizados
+    })
 
 
 
