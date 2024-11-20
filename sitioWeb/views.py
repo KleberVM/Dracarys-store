@@ -441,7 +441,7 @@ def ofertarMView(request):
         return redirect('base')
 
     # Si la solicitud es GET, renderizar el formulario con el usuario
-    return render(request, 'ofertar.html', {'user': user,'is_profile_page': True,'carritos': carritos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo,'temitas':colores_personalizados})
+    return render(request, 'ofertar.html', {'user_id':user_id,'user': user,'is_profile_page': True,'carritos': carritos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo,'temitas':colores_personalizados})
 
 
 def mis_materiales(request):
@@ -465,7 +465,7 @@ def mis_materiales(request):
         productos = productos.filter(estado_producto=False)
 
 
-    return render(request, 'productos_usuario.html', {'user': user,'is_profile_page': True,'carritos': carritos,'misProductos': productos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo,'temitas':colores_personalizados})
+    return render(request, 'productos_usuario.html', {'user_id':user_id,'user': user,'is_profile_page': True,'carritos': carritos,'misProductos': productos,'cantidad_carrito': cantidad_carrito,'config_logo': config_logo,'temitas':colores_personalizados})
 
 def detalle_producto(request, producto_id):
     user_id = request.session.get('user_id')
@@ -541,6 +541,7 @@ def detalle_producto(request, producto_id):
         'cantidad_carrito': cantidad_carrito,
         'config_logo': config_logo,
         'temitas':colores_personalizados,
+        'user_id':user_id,
         #'imagenes': producto.imagenes.all(),
     })
 def eliminar_imagenes(request):
