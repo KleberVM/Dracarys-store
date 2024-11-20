@@ -400,26 +400,28 @@
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
-    border-bottom: 1px;
     color: var(--white);
     font-weight: bold;
     text-align: center;
     cursor: default;
     outline: none;
     display: inline-block;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: color 0.3s ease, text-shadow 0.3s ease; /* Transición suave para el color y sombra */
+    box-shadow: none; /* Eliminación de la sombra del botón */
     width: 50%;
+    background: none; /* Sin fondo */
 }
 
 /* Estilo para el estado activo (verde) */
 .boton-estado.activo {
-    background-color: var(--primary-color); /* Verde */
+    color: var(--primary-color); /* Verde */
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.7); /* Sombra verde para el texto */
 }
 
 /* Estilo para el estado inactivo (rojo) */
 .boton-estado.inactivo {
-    background-color: var(--eliminarColor); /* Rojo */
+    color: var(--eliminarColor); /* Rojo */
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.7); /* Sombra roja para el texto */
 }
 
 
