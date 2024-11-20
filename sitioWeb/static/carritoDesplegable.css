@@ -175,3 +175,19 @@ button.dropbtn span {
     padding: 3px;
     margin: 0 0 0 20px
 }
+
+/*Estilo del boton comprar en carrito*/
+.btn-buy{
+    background-color: var(--tertiary-color);
+    color: var(--white);
+    border: none;
+    text-decoration: none;
+    padding: 5px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-buy:hover {
+    box-shadow: 1px 1px 3px 1px rgb(54, 54, 54)
+}
