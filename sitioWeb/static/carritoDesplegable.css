@@ -81,6 +81,22 @@
     margin-bottom: 8px;
 }
 
+/*para transaccion*/
+.cart-ite {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    margin-bottom: 8px;
+}
+
+.cart-ite span {
+    color: var(--white);
+    font-weight: bold;
+}
+
 .cart-item span {
     color: var(--white);
     font-weight: bold;
