@@ -213,11 +213,11 @@ document.getElementById('borrar-imagenes1').addEventListener('click', function(e
         title: "¿Estás seguro?",
         text: "¡Las imágenes seleccionadas se eliminarán permanentemente!",
         icon: "warning",
-        showCancelButton: true,
+        showCancelButton: false,
         confirmButtonColor: "#666666",
-        cancelButtonColor: "#d33",
+        //cancelButtonColor: "#d33",
         confirmButtonText: "Aceptar",
-        cancelButtonText: "Cancelar"
+        //cancelButtonText: "Cancelar"
     }).then((result) => {
         if (result.isConfirmed) {
             // Suspender la solicitud AJAX hasta que se haga clic en el botón "Guardar"

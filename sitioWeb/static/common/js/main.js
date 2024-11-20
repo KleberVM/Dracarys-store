@@ -45,3 +45,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Identificar por el texto contenido
+document.querySelectorAll('th').forEach(th => {
+    if (th.textContent.trim() === 'EstadoUsuario') {
+        th.textContent = 'Activo/Inactivo';
+        th.style.color = 'black';  // Cambia el color del texto a negro
+    }
+});
