@@ -724,6 +724,29 @@ input[type="file"] {
     opacity: 0.9;
 }
 
+.carousel-control-prev,
+.carousel-control-next {
+    top: 50%; /* Coloca los botones en el centro vertical */
+    transform: translateY(-50%); /* Centra el botón exactamente en el medio */
+    width: 40px; /* Ajusta el tamaño según tus preferencias */
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.3); /* Color de fondo */
+    border-radius: 50%;
+}
+
+/* Opcional: Personalizar el color del icono */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: var(--primary-color); /* Cambia este color al que desees */
+    border-radius: 50%;
+}
+
+/* Opcional: Cambiar el color al pasar el cursor */
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
 @media (max-width: 600px) {
 
    
