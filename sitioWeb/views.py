@@ -199,30 +199,28 @@ def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        
-        # Autenticar usuario
+
         user = Usuario.objects.filter(nombre=username, contraseña=password).first()
 
         if user:
-            # Guardar usuario en la sesión
-            request.session['user_id'] = user.idUsuario
-            request.session['username'] = user.nombre  # Guardar el nombre del usuario en la sesión
-            messages.success(request, '¡Bienvenido, {}! Has iniciado sesión correctamente.'.format(user.nombre))
-            return redirect('base')  # Redirige a la página principal
+            if user.estadoUsuario:
+                request.session['user_id'] = user.idUsuario
+                request.session['username'] = user.nombre
+                messages.success(request, f'¡Bienvenido, {user.nombre}! Has iniciado sesión correctamente.')
+                return redirect('base')
+            else:
+                messages.error(request, 'Tu cuenta está inactiva. Contacta con el soporte para más información.')
+                return redirect('base')
         else:
             messages.error(request, 'Usuario o contraseña incorrectos')
-            return redirect('base')  # Redirige a la página principal
-    
+            return redirect('base')
+
+    # Mostrar el formulario de login si no se ha enviado un POST
     user_id = request.session.get('user_id')
-    user = None
-    if user_id:
-        user = Usuario.objects.get(idUsuario=user_id)
+    user = Usuario.objects.get(idUsuario=user_id) if user_id else None
 
     if not user:
-        # Agregar el parámetro `login=1` a la URL para que el modal se abra
         return redirect('/?login=1')
-
-
 
     return render(request, 'base.html')
 
