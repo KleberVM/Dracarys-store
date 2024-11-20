@@ -318,3 +318,11 @@ img {
 .callout.callout-danger{
     padding: 1px;
 }
+
+/*Color de DracaryStore Antes Amarillo*/
+.brand-link.navbar-warning.active{
+    background-color: var(--primary-color);
+}
+.brand-text.font-weight-light{
+    background-color: var(--primary-color);
+}
