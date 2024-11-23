@@ -326,3 +326,9 @@ img {
 .brand-text.font-weight-light{
     background-color: var(--primary-color);
 }
+
+.main-footer .float-right.d-none.d-sm-inline {
+    display: none;
+    color: var(--background-color);
+    user-select: none;
+}
