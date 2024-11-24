@@ -332,3 +332,7 @@ img {
     color: var(--background-color);
     user-select: none;
 }
+#recent-actions-module a[href*="/admin/sitioWeb/usuario/"] {
+    color: var(--primary-color);
+    /*font-size: 1.5rem;*/
+}
