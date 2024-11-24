@@ -240,6 +240,7 @@ def login_view(request):
 
 # se añadio telefono con el valor de NumTelefono para mandarlo a la BD(celular)
 def registroView(request):
+    config_logo = ConfiguracionLogo.objects.first()
     if request.method == 'POST':
         # Obtener los datos del formulario
         nombre = request.POST.get('username')
@@ -247,6 +248,7 @@ def registroView(request):
         telefono = request.POST.get('NumTelefono')
         contraseña = request.POST.get('password')
         confirmar_contraseña = request.POST.get('confirmPassword')
+        
 
         # Validación básica
         if contraseña != confirmar_contraseña:
@@ -267,7 +269,7 @@ def registroView(request):
             messages.error(request, 'Ocurrió un error al guardar el usuario.')
             return redirect('registro')
 
-    return render(request, 'registro.html')
+    return render(request, 'registro.html',{'config_logo': config_logo})
 
 def perfil_view(request):
     user_id = request.session.get('user_id')
