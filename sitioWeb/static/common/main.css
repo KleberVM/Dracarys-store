@@ -336,3 +336,6 @@ img {
     color: var(--primary-color);
     /*font-size: 1.5rem;*/
 }
+.brand-link.navbar-warning{
+    background-color: var(--primary-color);
+}
