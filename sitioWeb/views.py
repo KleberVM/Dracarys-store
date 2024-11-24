@@ -30,7 +30,7 @@ def billetera_view(request):
     carritos = CarritoProducto.objects.filter(usuario=usuario, producto__estado_producto=True)
     cantidad_carrito = carritos.count()
     colores_personalizados = PersonalizarColores.objects.filter(usuario_id=user_id).first()
-
+    config_logo = ConfiguracionLogo.objects.first()
     if request.method == 'POST':
         accion = request.POST.get('accion')  # Identifica la acción
         try:
@@ -88,6 +88,7 @@ def billetera_view(request):
         'carritos': carritos,
         'cantidad_carrito': cantidad_carrito,
         'is_profile_page': True,
+        'config_logo': config_logo,
         'temitas': colores_personalizados,
     })
 
@@ -105,7 +106,7 @@ def transaccion_view(request):
     productos_en_carrito = CarritoProducto.objects.filter(usuario=usuario)
     cantidad_carrito = productos_en_carrito.count()
     colores_personalizados = PersonalizarColores.objects.filter(usuario_id=user_id).first()
-
+    config_logo = ConfiguracionLogo.objects.first()
     # Verifica si el carrito está vacío
     if not productos_en_carrito.exists():
         messages.info(request, 'No tienes productos en tu carrito.')
@@ -172,6 +173,7 @@ def transaccion_view(request):
         'saldo': usuario.billetera,
         'cantidad_carrito': cantidad_carrito,
         'is_profile_page': True,
+        'config_logo': config_logo,
         'temitas':colores_personalizados
     })
 
