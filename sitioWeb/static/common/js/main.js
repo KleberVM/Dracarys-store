@@ -143,3 +143,38 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+
+
+
+/*Dando color al boton SUBIR archivo en el admin*/
+// Referencia al input
+const fileInput = document.getElementById('id_form-0-logo');
+
+// Crear un botón personalizado
+const customButton = document.createElement('button');
+customButton.id = 'customFileButton';
+customButton.textContent = 'Seleccionar archivo';
+
+// Insertar el botón antes del input
+fileInput.parentNode.insertBefore(customButton, fileInput);
+
+// Mostrar el nombre del archivo
+const fileNameDisplay = document.createElement('div');
+fileNameDisplay.id = 'fileNameDisplay';
+fileNameDisplay.textContent = 'Ningún archivo seleccionado';
+fileInput.parentNode.insertBefore(fileNameDisplay, fileInput.nextSibling);
+
+// Manejar el clic en el botón para abrir el cuadro de diálogo de selección de archivos
+customButton.addEventListener('click', (e) => {
+  e.preventDefault(); // Evita recargar la página si el botón es un botón normal
+  fileInput.click();
+});
+
+// Actualizar el texto al seleccionar un archivo
+fileInput.addEventListener('change', () => {
+  const fileName = fileInput.files.length ? fileInput.files[0].name : 'Ningún archivo seleccionado';
+  fileNameDisplay.textContent = fileName;
+});
+
+

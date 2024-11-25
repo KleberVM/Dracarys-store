@@ -446,4 +446,52 @@ th.field-nombre:hover a::after {
     background-color: var(--accent-hover); /* Color al pasar el cursor */
 }
 
-
+/*Dando color al boton SUBIR archivo en el admin*/
+/* Oculta el input original, pero sigue siendo funcional */
+#id_form-0-logo {
+    opacity: 0; /* Lo hace invisible */
+    position: absolute; /* Lo posiciona fuera de la vista */
+    z-index: -1; /* Lo coloca detrás de otros elementos */
+  }
+  
+  /* Botón personalizado */
+  #customFileButton {
+    display: inline-block;
+    padding: 5px 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Hover efecto */
+  #customFileButton:hover {
+    background: var(--secondary-color);
+    transform: scale(1.02);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Mostrar el nombre del archivo */
+  #fileNameDisplay {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+    font-style: italic;
+  }
+  
+  /*Dando color al boton SUBIR archivo en DETALLES en el admin*/
+  #id_logo{
+    padding: 5px;
+    background: var(--primary-color);
+    border-radius: 10px;
+    color: var(--background-color);
+  }
+  #id_logo:hover{
+    background-color: var(--secondary-color);
+  }
