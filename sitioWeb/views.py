@@ -90,6 +90,7 @@ def billetera_view(request):
         'is_profile_page': True,
         'config_logo': config_logo,
         'temitas': colores_personalizados,
+        'user_id': user_id,
     })
 
 
