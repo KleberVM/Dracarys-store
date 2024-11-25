@@ -339,3 +339,56 @@ img {
 .brand-link.navbar-warning{
     background-color: var(--primary-color);
 }
+
+
+
+
+a[href="/admin/password_change/"] {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+nav#jazzy-navbar .nav-item.dropdown > a.nav-link > i.far.fa-user {
+    display: none;
+}
+
+nav#jazzy-navbar .nav-item.dropdown > a.nav-link::before {
+    content: "";
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-image: url('/static/cerrar-sesion.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 5px;
+}
+
+
+/* Selecciona específicamente el ícono en el botón de cerrar sesión */
+nav#jazzy-navbar form#logout-form .dropdown-item > i.fas.fa-users {
+    display: none; /* Oculta el ícono actual */
+}
+
+/* Añade un nuevo ícono personalizado antes del texto del botón */
+nav#jazzy-navbar form#logout-form .dropdown-item::before {
+    content: ""; /* Necesario para añadir un ícono */
+    display: inline-block;
+    width: 20px; /* Ajusta el tamaño del ícono */
+    height: 20px;
+    background-image: url('/static/opcionCerrar.png'); /* Ruta a tu ícono personalizado */
+    background-size: contain; /* Asegura que el ícono se ajuste bien */
+    background-repeat: no-repeat; /* Evita repeticiones */
+    margin-right: 5px; /* Espacio entre el ícono y el texto */
+}
+
+
+
