@@ -417,34 +417,36 @@ th.field-nombre a::after {
     position: absolute;
     left: 0;
 }*/
-th.field-nombre a::after {
+/* Estilo específico para la tabla del administrador de logos */
+#result_list th.field-nombre a[href*="/admin/sitioWeb/configuracionlogo/"]::after {
     content: "Detalles";
     display: inline-block;
     padding: 5px 10px;
     background-color: var(--primary-color); /* Color del botón */
-    color: white; /* Color del texto */
-    font-size: 15px; /* Tamaño del texto */
-    border-radius: 5px; /* Bordes redondeados */
+    color: white;
+    font-size: 15px;
+    border-radius: 5px;
     text-align: center;
     text-decoration: none;
     font-weight: bold;
+    cursor: pointer;
 }
 
-th.field-nombre a {
+#result_list th.field-nombre a[href*="/admin/sitioWeb/configuracionlogo/"] {
     visibility: hidden;
     position: relative;
 }
 
-th.field-nombre a::after {
+#result_list th.field-nombre a[href*="/admin/sitioWeb/configuracionlogo/"]::after {
     visibility: visible;
     position: absolute;
     left: 0;
-    cursor: pointer;
 }
 
-th.field-nombre:hover a::after {
+#result_list th.field-nombre a[href*="/admin/sitioWeb/configuracionlogo/"]:hover::after {
     background-color: var(--accent-hover); /* Color al pasar el cursor */
 }
+
 
 /*Dando color al boton SUBIR archivo en el admin*/
 /* Oculta el input original, pero sigue siendo funcional */
