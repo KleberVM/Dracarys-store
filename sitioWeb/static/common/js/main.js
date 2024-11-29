@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Redirigir a la página de lista de usuarios
-        window.location.href = '/admin/sitioWeb/usuario/';  // Redirige a la lista de usuarios
+        window.history.back();  // Regresa a la página anterior en el historial del navegador
     });
 });
 
