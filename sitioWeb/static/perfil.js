@@ -213,6 +213,12 @@ document.getElementById('input-editar-nombre').addEventListener('keydown', funct
     }
 });
 
+document.getElementById('input-editar-correo').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        document.getElementById('guardar-correo').click();
+    }
+});
+
 
 
 //------------------------------------------------------------------------BILLETERA----------------------------------------------------------------------
