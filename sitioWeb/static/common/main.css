@@ -417,6 +417,25 @@ th.field-nombre a::after {
     position: absolute;
     left: 0;
 }*/
+.alert.alert-danger {
+    position: relative;
+    visibility: hidden; /* Oculta el mensaje original */
+  }
+  
+  .alert.alert-danger::after {
+    content: "Por favor, corrige el error a continuación."; /* Mensaje en español */
+    visibility: visible; /* Asegura que el nuevo contenido sea visible */
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%; /* Ocupa el ancho completo del contenedor */
+    background-color: #ffccbc; /* Color de fondo original */
+    color: #c62828; /* Color del texto original */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ff8a65; /* Borde original */
+    border-radius: 4px; /* Mantiene esquinas redondeadas */
+    box-sizing: border-box; /* Asegura que el estilo no afecte el diseño */
+  }
 /* Estilo específico para la tabla del administrador de logos */
 #result_list th.field-nombre a[href*="/admin/sitioWeb/configuracionlogo/"]::after {
     content: "Detalles";
