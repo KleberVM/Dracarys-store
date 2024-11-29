@@ -466,6 +466,22 @@ th.field-nombre a::after {
     background-color: var(--accent-hover); /* Color al pasar el cursor */
 }
 
+h3.timeline-header.no-border a[href="/admin/sitioWeb/configuracionlogo/1/change/"] {
+    color: var(--primary-color) !important; 
+    text-decoration: none !important; 
+}
+
+h3.timeline-header.no-border a[href="/admin/auth/user/2/change/"] {
+    color: var(--primary-color) !important;
+    text-decoration: none !important;
+}
+
+h3.timeline-header.no-border a[href="/admin/sitioWeb/producto/32/change/"] {
+    color: var(--primary-color) !important; 
+    text-decoration: none !important; 
+}
+
+
 
 /*Dando color al boton SUBIR archivo en el admin*/
 /* Oculta el input original, pero sigue siendo funcional */
