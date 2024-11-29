@@ -545,3 +545,7 @@ h3.timeline-header.no-border a[href="/admin/sitioWeb/producto/32/change/"] {
   #id_logo:hover{
     background-color: var(--secondary-color);
   }
+/*quitando el boton de cancelar en comision del admin*/
+  form#comisionadmin_form .btn-cancel {
+    display: none;
+  }
