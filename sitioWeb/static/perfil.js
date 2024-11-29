@@ -219,7 +219,11 @@ document.getElementById('input-editar-correo').addEventListener('keydown', funct
     }
 });
 
-
+document.getElementById('input-editar-celular').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        document.getElementById('guardar-celular').click();
+    }
+});
 
 //------------------------------------------------------------------------BILLETERA----------------------------------------------------------------------
 // Función para mostrar y ocultar el saldo
