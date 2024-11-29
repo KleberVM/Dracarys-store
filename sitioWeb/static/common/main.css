@@ -384,11 +384,24 @@ nav#jazzy-navbar form#logout-form .dropdown-item::before {
     display: inline-block;
     width: 20px; /* Ajusta el tamaño del ícono */
     height: 20px;
-    background-image: url('/static/opcionCerrar.png'); /* Ruta a tu ícono personalizado */
+    background-image: url('/static/opcion-de-cerrar-sesionBlanco.png'); /* Ruta a tu ícono personalizado */
     background-size: contain; /* Asegura que el ícono se ajuste bien */
     background-repeat: no-repeat; /* Evita repeticiones */
     margin-right: 5px; /* Espacio entre el ícono y el texto */
 }
+
+
+
+nav#jazzy-navbar form#logout-form .dropdown-item:hover::before {
+    background-image: url('/static/opcionCerrar.png'); /* Ruta a la imagen de hover */
+}
+
+/*color de cerrar secion a blanco*/
+.dropdown-item{
+    color: #bdeeee;
+}
+
+
 
 
 img {
