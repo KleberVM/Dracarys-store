@@ -207,6 +207,12 @@ document.getElementById('guardar-celular').addEventListener('click', function() 
 });
 //-----------fin modal
 
+document.getElementById('input-editar-nombre').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        document.getElementById('guardar-nombre').click();
+    }
+});
+
 
 
 //------------------------------------------------------------------------BILLETERA----------------------------------------------------------------------
